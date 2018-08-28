@@ -49,9 +49,12 @@ Steering* SeekSteering::getSteering()
 	diff.normalize();
 	diff *= pOwner->getMaxAcc();
 
+	float velDirection = atan2(diff.getY(), diff.getX()) + (3.14159 / 2.0f);
+	pOwner->getPositionComponent()->setFacing(velDirection);
+
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 	data.acc = diff;
-	data.rotVel = 1.0f;
+	//data.rotVel = 1.0f;
 	this->mData = data;
 	return this;
 }
