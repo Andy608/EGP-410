@@ -67,6 +67,9 @@
     <ClCompile Include="Font.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="ArriveSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsBuffer.h">
@@ -123,9 +126,6 @@
     <ClInclude Include="UnitManager.h">
       <Filter>Header Files\Units</Filter>
     </ClInclude>
-    <ClInclude Include="SteeringComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="SeekSteering.h">
       <Filter>Header Files\Steering</Filter>
     </ClInclude>
@@ -134,6 +134,12 @@
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ArriveSteering.h">
+      <Filter>Header Files\Steering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

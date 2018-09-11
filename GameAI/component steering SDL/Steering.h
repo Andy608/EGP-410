@@ -22,7 +22,10 @@ public:
 	};
 
 	//constructors and destructors
-	Steering( SteeringType type = INVALID_TYPE ):mType(type), mTargetLoc(ZERO_VECTOR2D), mTargetID(INVALID_UNIT_ID), mOwnerID(INVALID_UNIT_ID), mData(ZERO_PHYSICS_DATA) {};
+	//Steering( SteeringType type = INVALID_TYPE ) : mType(type), mTargetLoc(ZERO_VECTOR2D), mTargetID(INVALID_UNIT_ID), mOwnerID(INVALID_UNIT_ID), mData(ZERO_PHYSICS_DATA) {};
+	Steering(SteeringType type = INVALID_TYPE, const UnitID& ownerID = INVALID_UNIT_ID, const Vector2D& targetLoc = ZERO_VECTOR2D, const UnitID& targetID = INVALID_UNIT_ID) :
+		mType(type), mOwnerID(ownerID), mTargetLoc(targetLoc), mTargetID(targetID), mData(ZERO_PHYSICS_DATA) {};
+	
 	virtual ~Steering(){};
 
 	//accessors

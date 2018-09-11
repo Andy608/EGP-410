@@ -8,4 +8,7 @@ public:
 
 protected:
 	virtual Steering* getSteering();
+
+private:
+	inline SteeringType getSteeringType(bool shouldFlee) { return shouldFlee ? Steering::FLEE : Steering::SEEK; }
 };
