@@ -18,15 +18,18 @@ public:
 		INVALID_TYPE = -1,
 		SEEK,
 		FLEE,
-		ARRIVE
+		ARRIVE,
+		FACE,
+		WANDER,
+		WANDER_AND_CHASE,
+		ARRIVE_AND_FACE
 	};
 
 	//constructors and destructors
-	//Steering( SteeringType type = INVALID_TYPE ) : mType(type), mTargetLoc(ZERO_VECTOR2D), mTargetID(INVALID_UNIT_ID), mOwnerID(INVALID_UNIT_ID), mData(ZERO_PHYSICS_DATA) {};
 	Steering(SteeringType type = INVALID_TYPE, const UnitID& ownerID = INVALID_UNIT_ID, const Vector2D& targetLoc = ZERO_VECTOR2D, const UnitID& targetID = INVALID_UNIT_ID) :
 		mType(type), mOwnerID(ownerID), mTargetLoc(targetLoc), mTargetID(targetID), mData(ZERO_PHYSICS_DATA) {};
 	
-	virtual ~Steering(){};
+	virtual ~Steering() {};
 
 	//accessors
 	void setTargetLoc(const Vector2D& loc) { mTargetLoc = loc; };

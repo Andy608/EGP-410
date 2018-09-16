@@ -7,11 +7,8 @@
 #include "Unit.h"
 
 
-SeekSteering::SeekSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID, bool shouldFlee /*= false*/)
-	: Steering(getSteeringType(shouldFlee), ownerID, targetLoc, targetID)
-{
-	
-}
+SeekSteering::SeekSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID, bool shouldFlee) : 
+	Steering(getSteeringType(shouldFlee), ownerID, targetLoc, targetID) { }
 
 Steering* SeekSteering::getSteering()
 {

@@ -108,14 +108,13 @@ bool Game::init()
 	pUnit->setSteering(Steering::ARRIVE, ZERO_VECTOR2D);
 
 	//create 2 enemies
-	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth()-1, 0.0f), 0.0f));
+	/*pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth()-1, 0.0f), 0.0f));
 	pUnit->setShowTarget(true);
 	pUnit->setSteering(Steering::SEEK, ZERO_VECTOR2D, PLAYER_UNIT_ID);
 
 	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D(0.0f, (float)gpGame->getGraphicsSystem()->getHeight()-1), 0.0f));
 	pUnit->setShowTarget(false);
-	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
-
+	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);*/
 
 	return true;
 }
@@ -207,12 +206,14 @@ void Game::processLoop()
 			mShouldExit = true;
 		}
 	}
-	Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
+	
+	//MAKES ALL THE RANDOM UNITS
+
+	/*Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
 	if (pUnit == NULL)
 	{
 		mpUnitManager->deleteRandomUnit();
-	}
-
+	}*/
 }
 
 bool Game::endLoop()
