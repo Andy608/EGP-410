@@ -15,6 +15,7 @@ class GameMessageManager;
 class Timer;
 class ComponentManager;
 class UnitManager;
+class Vector2D;
 
 const IDType BACKGROUND_SPRITE_ID = 0;
 const IDType PLAYER_ICON_SPRITE_ID = 1;
@@ -68,6 +69,8 @@ private:
 
 float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge
 float genRandomFloat();//range 0:1 from "Artificial Intelligence for Games", Millington and Funge
+
+Vector2D floatToVector2(const float angle);
 
 extern Game* gpGame;
 extern PerformanceTracker* gpPerformanceTracker;

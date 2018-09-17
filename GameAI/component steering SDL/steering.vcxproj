@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlignSteering.h" />
     <ClInclude Include="ArriveSteering.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
@@ -35,8 +36,10 @@
     <ClInclude Include="SteeringComponent.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitManager.h" />
+    <ClInclude Include="WanderSteering.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlignSteering.cpp" />
     <ClCompile Include="ArriveSteering.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -61,6 +64,7 @@
     <ClCompile Include="SteeringComponent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitManager.cpp" />
+    <ClCompile Include="WanderSteering.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{07ED8114-0659-4424-9468-50DBBEA5882A}</ProjectGuid>

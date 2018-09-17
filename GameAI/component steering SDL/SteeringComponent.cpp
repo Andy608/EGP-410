@@ -3,6 +3,7 @@
 #include "SeekSteering.h"
 #include "ArriveSteering.h"
 #include "FaceSteering.h"
+#include "WanderSteering.h"
 
 SteeringComponent::SteeringComponent(const ComponentID& id, const ComponentID& physicsComponentID) 
 	:Component(id)
@@ -55,10 +56,22 @@ void SteeringComponent::setData(const SteeringData& data)
 			mpSteering = new ArriveSteering(data.ownerID, data.targetLoc, data.targetID);
 			break;
 		}
+		case Steering::ALIGN:
+		{
+			delete mpSteering;
+			mpSteering = new AlignSteering(data.ownerID, data.targetLoc, data.targetID);
+			break;
+		}
 		case Steering::FACE:
 		{
 			delete mpSteering;
 			mpSteering = new FaceSteering(data.ownerID, data.targetLoc, data.targetID);
+			break;
+		}
+		case Steering::WANDER:
+		{
+			delete mpSteering;
+			mpSteering = new WanderSteering(data.ownerID, data.targetLoc, data.targetID);
 			break;
 		}
 		default:

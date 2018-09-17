@@ -105,6 +105,9 @@ Steering* ArriveSteering::getSteering()
 		}
 	}
 
+	/*float velDirection = atan2(direction.getY(), direction.getX()) + (3.14159 / 2.0f);
+	pOwner->getPositionComponent()->setFacing(velDirection);*/
+
 	this->mData = data;
 	return this;
 }

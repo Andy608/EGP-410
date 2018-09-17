@@ -108,13 +108,13 @@ bool Game::init()
 	pUnit->setSteering(Steering::ARRIVE, ZERO_VECTOR2D);
 
 	//create 2 enemies
-	/*pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth()-1, 0.0f), 0.0f));
+	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth() / 2.0f, (float)gpGame->getGraphicsSystem()->getHeight() / 2.0f), 0.0f));
 	pUnit->setShowTarget(true);
-	pUnit->setSteering(Steering::SEEK, ZERO_VECTOR2D, PLAYER_UNIT_ID);
+	pUnit->setSteering(Steering::WANDER, ZERO_VECTOR2D, PLAYER_UNIT_ID);
 
 	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D(0.0f, (float)gpGame->getGraphicsSystem()->getHeight()-1), 0.0f));
 	pUnit->setShowTarget(false);
-	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);*/
+	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
 
 	return true;
 }
@@ -232,5 +232,10 @@ float genRandomFloat()
 {
 	float r = (float)rand()/(float)RAND_MAX;
 	return r;
+}
+
+Vector2D floatToVector2(const float angle)
+{
+	return Vector2D(cos(angle), sin(angle));
 }
 

@@ -19,6 +19,7 @@ public:
 		SEEK,
 		FLEE,
 		ARRIVE,
+		ALIGN,
 		FACE,
 		WANDER,
 		WANDER_AND_CHASE,
