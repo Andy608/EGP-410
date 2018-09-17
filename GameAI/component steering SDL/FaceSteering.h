@@ -11,6 +11,10 @@ public:
 
 protected:
 	virtual Steering* getSteering() override;
+
+private:
+	//Maps the rotation between -PI and PI.
+	void mapToRange(float& rotation);
 };
 
 #endif

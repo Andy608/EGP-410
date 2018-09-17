@@ -13,42 +13,79 @@ FaceSteering::FaceSteering(const UnitID& ownerID, const Vector2D& targetLoc, con
 
 Steering* FaceSteering::getSteering()
 {
+	static float targetRadius = 0.1f / 180.0f * 3.14159;
+	static float slowRadius = 250.0f / 180.0f * 3.14159;
+	static float timeToTarget = 0.1f;
+
+	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
+	
+	float maxRotationalAcc = pOwner->getMaxRotAcc();
+	float maxRotationalVel = pOwner->getMaxRotVel();
+
+	Vector2D direction;
+	float angle;
+	float rotationVelocity;
+	float targetRotationVelocity;
+
 	if (mTargetID != INVALID_UNIT_ID)
 	{
-		//arriving unit
+		//Unit to face
 		Unit* pTarget = gpGame->getUnitManager()->getUnit(mTargetID);
 		assert(pTarget != NULL);
 		mTargetLoc = pTarget->getPositionComponent()->getPosition();
 	}
 
-	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
-	
-	float targetRadius = 50.0f;
-	float timeToTarget = 0.1f;
+	direction = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 
-	float maxRotAcc = pOwner->getMaxRotAcc();
-	float maxRotation = 360.0f;
-	
-	//The rotation we need to get to.
-	Vector2D targetRotationVec = mTargetLoc - pOwner->getPositionComponent()->getPosition();
-
-	//The current and target rotation radians
-	float currentRotation = pOwner->getFacing();
-	float targetRotation = atan2(targetRotationVec.getY(), targetRotationVec.getX()) /*+ (3.14159 / 2.0f)*/;
-
-	float rotationDirection;
-
-	std::cout << "TARGET ROTATION: " << std::to_string(targetRotation) << std::endl;
+	angle = atan2(direction.getY(), direction.getX()) - pOwner->getFacing() + (90.0f / 180.0f * 3.14159);
+	mapToRange(angle);
+	rotationVelocity = abs(angle);
 
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 
+	if (rotationVelocity < targetRadius)
+	{
+		//We are done! Return no steering.
+		std::cout << "IN THE TARGET RADIUS!" << std::endl;
+		return NULL;
+	}
 
+	if (rotationVelocity > slowRadius)
+	{
+		targetRotationVelocity = maxRotationalVel;
+	}
+	else
+	{
+		targetRotationVelocity = maxRotationalVel * rotationVelocity / slowRadius;
+	}
 
-	/*float velDirection = atan2(velocity.getY(), velocity.getX()) + (3.14159 / 2.0f);
-	pOwner->getPositionComponent()->setFacing(velDirection);*/
+	targetRotationVelocity *= angle / rotationVelocity;
 
-	//data.vel = velocity;
-	data.rotVel = 0.0f;
+	data.rotAcc = (targetRotationVelocity - data.rotVel);
+	data.rotAcc /= timeToTarget;
+
+	float angularAcc = abs(data.rotAcc);
+
+	if (angularAcc > maxRotationalAcc)
+	{
+		data.rotAcc /= angularAcc;
+		data.rotAcc *= maxRotationalAcc;
+	}
+
 	this->mData = data;
 	return this;
+}
+
+void FaceSteering::mapToRange(float& rotation)
+{
+	static const float PI = 3.14159;
+
+	if (rotation > PI)
+	{
+		rotation -= (2 * PI);
+	}
+	else if (rotation < -PI)
+	{
+		rotation += (2 * PI);
+	}
 }
