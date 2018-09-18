@@ -41,13 +41,14 @@ public:
 	//void setData(const PhysicsData& data) { mData = data; };
 	const PhysicsData& getData() const { return mData; };
 	void update();
+
+	virtual Steering* getSteering() { return this; };//overridden by sub-classes
+
 protected:
 	SteeringType mType;
 	Vector2D mTargetLoc;
 	UnitID mTargetID;
 	UnitID mOwnerID;
 	PhysicsData mData;
-
-	virtual Steering* getSteering() { return this; };//overridden by sub-classes
 
 };

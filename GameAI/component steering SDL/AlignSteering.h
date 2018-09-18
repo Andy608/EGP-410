@@ -9,9 +9,10 @@ class AlignSteering : public Steering
 public:
 	AlignSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID = INVALID_UNIT_ID);
 
-protected:
+	void setTargetAngle(const float targetAngle);
 	virtual Steering* getSteering() override;
 
+protected:
 	bool mIsTargetAngleGiven;
 	float mTargetAngle;
 

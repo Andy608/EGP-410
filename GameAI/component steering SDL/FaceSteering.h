@@ -2,15 +2,18 @@
 #define FACE_STEERING_H_
 
 #include <Trackable.h>
+#include "Steering.h"
 #include "AlignSteering.h"
 
-class FaceSteering : public AlignSteering
+class FaceSteering : public Steering
 {
 public:
 	FaceSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID = INVALID_UNIT_ID);
+	
+	virtual Steering* getSteering() override;
 
 protected:
-	virtual Steering* getSteering() override;
+	AlignSteering mAlignSteering;
 };
 
 #endif

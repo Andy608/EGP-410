@@ -6,9 +6,10 @@
 #include "Unit.h"
 
 WanderSteering::WanderSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
-	FaceSteering(ownerID, targetLoc, targetID)
+	Steering(Steering::WANDER, ownerID, targetLoc, targetID),
+	mFaceSteering(FaceSteering(ownerID, targetLoc, targetID))
 {
-	Steering::mType = Steering::WANDER;
+	
 }
 
 Steering* WanderSteering::getSteering()
@@ -35,13 +36,13 @@ Steering* WanderSteering::getSteering()
 
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 
-	Steering* steering = FaceSteering::getSteering();
+	Steering* faceSteering = mFaceSteering.getSteering();
 
 	//If we've reached the target rotation, this will be null.
 	//Otherwise, add the target acceleration.
-	if (steering)
+	if (faceSteering)
 	{
-		data.rotAcc = steering->getData().rotAcc;
+		data.rotAcc = faceSteering->getData().rotAcc;
 	}
 
 	data.acc = ownerDirection * maxAcceleration;

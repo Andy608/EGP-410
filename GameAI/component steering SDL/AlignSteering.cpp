@@ -13,6 +13,12 @@ AlignSteering::AlignSteering(const UnitID& ownerID, const Vector2D& targetLoc, c
 
 }
 
+void AlignSteering::setTargetAngle(const float targetAngle)
+{
+	mTargetAngle = targetAngle;
+	mIsTargetAngleGiven = true;
+}
+
 Steering* AlignSteering::getSteering()
 {
 	static float targetRadius = 0.1f / 180.0f * 3.14159;
