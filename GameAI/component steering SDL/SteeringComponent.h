@@ -1,7 +1,9 @@
-#pragma once
+#ifndef STEERING_COMPONENT_H_
+#define STEERING_COMPONENT_H_
 
-#include <Trackable.h>
 #include <Vector2D.h>
+#include <Trackable.h>
+
 #include "Component.h"
 #include "Unit.h"
 
@@ -11,9 +13,13 @@ enum Steering::SteeringType;
 
 struct SteeringData : public Trackable
 {
-	SteeringData():type(Steering::INVALID_TYPE), targetLoc(ZERO_VECTOR2D), ownerID(INVALID_UNIT_ID), targetID(INVALID_UNIT_ID){};
-	SteeringData(Steering::SteeringType theType, const Vector2D& theTargetLoc = ZERO_VECTOR2D, UnitID theOwner = INVALID_UNIT_ID, UnitID theTarget = INVALID_UNIT_ID)
-		:type(theType), targetLoc(theTargetLoc), ownerID(theOwner), targetID(theTarget){};
+	inline SteeringData() : type(Steering::INVALID_TYPE), targetLoc(ZERO_VECTOR2D), ownerID(INVALID_UNIT_ID), targetID(INVALID_UNIT_ID) {};
+	inline SteeringData(Steering::SteeringType theType, const Vector2D& theTargetLoc = ZERO_VECTOR2D, UnitID theOwner = INVALID_UNIT_ID, UnitID theTarget = INVALID_UNIT_ID) : 
+		type(theType), 
+		targetLoc(theTargetLoc), 
+		ownerID(theOwner), 
+		targetID(theTarget) {};
+
 	Steering::SteeringType type;
 	Vector2D targetLoc;
 	UnitID ownerID;
@@ -22,7 +28,7 @@ struct SteeringData : public Trackable
 
 const SteeringData ZERO_STEERING_DATA;
 
-class SteeringComponent :public Component
+class SteeringComponent : public Component
 {
 public:
 	//getters and setters
@@ -36,6 +42,7 @@ public:
 	void setTargetLoc(const Vector2D& pos) { mData.targetLoc = pos; };
 	void setTargetUnitID(const UnitID& id) { mData.targetID = id; };
 	void applySteering(PhysicsComponent& physicsComponent);
+
 private:
 	ComponentID mPhysicsComponentID;
 	SteeringData mData;
@@ -48,3 +55,5 @@ private:
 
 	friend class ComponentManager;
 };
+
+#endif

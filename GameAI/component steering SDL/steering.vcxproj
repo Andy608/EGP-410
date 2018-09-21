@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlignSteering.h" />
+    <ClInclude Include="ArriveAndFaceSteering.h" />
     <ClInclude Include="ArriveSteering.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
@@ -29,7 +30,6 @@
     <ClInclude Include="KeyboardMessage.h" />
     <ClInclude Include="MouseMessage.h" />
     <ClInclude Include="PhysicsComponent.h" />
-    <ClInclude Include="PlayerMoveToMessage.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SeekSteering.h" />
@@ -39,11 +39,13 @@
     <ClInclude Include="SteeringComponent.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitManager.h" />
+    <ClInclude Include="WanderAndChaseSteering.h" />
     <ClInclude Include="WanderSteering.h" />
     <ClInclude Include="RequestWindowCloseMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AlignSteering.cpp" />
+    <ClCompile Include="ArriveAndFaceSteering.cpp" />
     <ClCompile Include="ArriveSteering.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -61,7 +63,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MouseMessage.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
-    <ClCompile Include="PlayerMoveToMessage.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SeekSteering.cpp" />
@@ -71,6 +72,7 @@
     <ClCompile Include="SteeringComponent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitManager.cpp" />
+    <ClCompile Include="WanderAndChaseSteering.cpp" />
     <ClCompile Include="WanderSteering.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,8 +1,9 @@
 #ifndef MOUSE_MESSAGE_H_
 #define MOUSE_MESSAGE_H_
 
-#include "GameMessage.h"
 #include <Vector2D.h>
+
+#include "GameMessage.h"
 
 class MouseMessage : public GameMessage
 {

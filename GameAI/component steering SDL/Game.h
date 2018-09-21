@@ -1,9 +1,11 @@
-#pragma once
+#ifndef GAME_H_
+#define GAME_H_
 
-#include "Trackable.h"
-#include "PerformanceTracker.h"
-#include "Defines.h"
 #include <string>
+
+#include <Trackable.h>
+#include <PerformanceTracker.h>
+#include "Defines.h"
 
 class GraphicsSystem;
 class GraphicsBuffer;
@@ -23,15 +25,17 @@ const IDType PLAYER_ICON_SPRITE_ID = 1;
 const IDType AI_ICON_SPRITE_ID = 2;
 const IDType TARGET_SPRITE_ID = 3;
 
-const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
+//how long should each frame of execution take? 30fps = 33.3ms/frame
+const float LOOP_TARGET_TIME = 33.3f;
 
-class Game:public Trackable
+class Game : public Trackable
 {
 public:
 	Game();
 	~Game();
 
-	bool init();//returns true if no errors, false otherwise
+	//returns true if no errors, false otherwise
+	bool init();
 	void cleanup();
 
 	void setShouldClose(bool shouldClose) { mShouldExit = shouldClose; };
@@ -41,6 +45,7 @@ public:
 	void processLoop();
 	bool endLoop();
 
+	//getters
 	inline GraphicsSystem* getGraphicsSystem() const { return mpGraphicsSystem; };
 	inline GraphicsBufferManager* getGraphicsBufferManager() const { return mpGraphicsBufferManager; };
 	inline SpriteManager* getSpriteManager() const { return mpSpriteManager; };
@@ -72,11 +77,16 @@ private:
 
 };
 
-float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge
-float genRandomFloat();//range 0:1 from "Artificial Intelligence for Games", Millington and Funge
+//range -1:1 from "Artificial Intelligence for Games", Millington and Funge
+float genRandomBinomial();
 
+//range 0:1 from "Artificial Intelligence for Games", Millington and Funge
+float genRandomFloat();
+
+//Returns a vector based on the angle.
 Vector2D floatToVector2(const float angle);
 
 extern Game* gpGame;
 extern PerformanceTracker* gpPerformanceTracker;
 
+#endif

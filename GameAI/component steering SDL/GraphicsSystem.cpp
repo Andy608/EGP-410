@@ -2,21 +2,21 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-//#include "Game.h"
 #include "GraphicsSystem.h"
 #include "GraphicsBuffer.h"
 #include "Sprite.h"
 #include "Renderer.h"
 #include "Font.h"
 
-GraphicsSystem::GraphicsSystem()
-	:mpWindow(NULL)
-	,mpRenderer(NULL)
-	,mpBackBuffer(NULL)
-	,mWidth(0)
-	,mHeight(0)
-	,mInitted(false)
+GraphicsSystem::GraphicsSystem() :
+	mpWindow(NULL),
+	mpRenderer(NULL),
+	mpBackBuffer(NULL),
+	mWidth(0),
+	mHeight(0),
+	mInitted(false)
 {
+
 }
 
 GraphicsSystem::~GraphicsSystem()
@@ -24,7 +24,7 @@ GraphicsSystem::~GraphicsSystem()
 	cleanup();
 }
 
-bool GraphicsSystem::init( int width, int height )
+bool GraphicsSystem::init(int width, int height)
 {
 	mWidth = width;
 	mHeight = height;
@@ -116,7 +116,7 @@ void GraphicsSystem::wrapCoordinates( Vector2D& vector )
 
 void GraphicsSystem::draw(const Sprite& aSprite, float dx, float dy, float rotationInRadians /*= 0*/, int flags /*= 0*/)
 {
-	draw( *getBackBuffer(), aSprite, dx, dy, rotationInRadians, flags);
+	draw(*getBackBuffer(), aSprite, dx, dy, rotationInRadians, flags);
 }
 
 void GraphicsSystem::draw(GraphicsBuffer& dest, const Sprite& aSprite, float dx, float dy, float rotationInRadians /*= 0*/, int flags /*= 0*/)
@@ -126,16 +126,19 @@ void GraphicsSystem::draw(GraphicsBuffer& dest, const Sprite& aSprite, float dx,
 	SDL_Renderer* pRenderer = mpRenderer->mpRenderer;
 	const Vector2D& srcSize = aSprite.getSize();
 	const Vector2D& srcLoc = aSprite.getSourceLoc();
+	
 	SDL_Rect srcRect;
 	srcRect.w = (int)srcSize.getX();
 	srcRect.h = (int)srcSize.getY();
 	srcRect.x = (int)srcLoc.getX();
 	srcRect.y = (int)srcLoc.getY();
+	
 	SDL_Rect destRect;
 	destRect.w = (int)srcRect.w;
 	destRect.h = (int)srcRect.h;
 	destRect.x = (int)dx;
 	destRect.y = (int)dy;
+
 	double rotationInDegrees = rotationInRadians * (180.0 / M_PI);
 	SDL_RenderCopyEx(pRenderer, aSprite.getBuffer()->mpTexture, &srcRect, &destRect, rotationInDegrees, NULL, SDL_FLIP_NONE);
 
@@ -166,6 +169,7 @@ void GraphicsSystem::writeText(GraphicsBuffer& dest, Font& font, float dx, float
 
 		draw(dest, Sprite(&textBuffer, 0, 0, width, height), dx, dy);
 	}
+
 	SDL_FreeSurface(pSurfaceText);
 }
 

@@ -4,7 +4,6 @@
 #include <SDL.h>
 #include <cassert>
 
-
 using namespace std;
 
 GraphicsBuffer* Renderer::makeBackBuffer() const

@@ -1,10 +1,10 @@
 #include <cassert>
+
 #include "ComponentManager.h"
 #include "Component.h"
 #include "PositionComponent.h"
 #include "PhysicsComponent.h"
 #include "SteeringComponent.h"
-
 
 ComponentID ComponentManager::msNextPositionComponentID = 0;
 ComponentID ComponentManager::msNextPhysicsComponentID = 0;
@@ -12,18 +12,18 @@ ComponentID ComponentManager::msNextSteeringComponentID = 0;
 
 using namespace std;
 
-ComponentManager::ComponentManager(Uint32 maxSize)
-	:mPositionPool(maxSize, sizeof(PositionComponent))
-	, mPhysicsPool(maxSize, sizeof(PhysicsComponent))
-	, mSteeringPool(maxSize, sizeof(SteeringComponent))
+ComponentManager::ComponentManager(Uint32 maxSize) :
+	mPositionPool(maxSize, sizeof(PositionComponent)), 
+	mPhysicsPool(maxSize, sizeof(PhysicsComponent)), 
+	mSteeringPool(maxSize, sizeof(SteeringComponent))
 {
+
 }
 
 ComponentManager::~ComponentManager()
 {
 	clear();
 }
-
 
 void ComponentManager::clear()
 {
@@ -54,7 +54,6 @@ void ComponentManager::clear()
 	mPhysicsPool.reset();
 	mSteeringPool.reset();
 }
-
 
 PositionComponent* ComponentManager::getPositionComponent(const ComponentID& id)
 {
@@ -111,7 +110,6 @@ PhysicsComponent* ComponentManager::getPhysicsComponent(const ComponentID& id)
 	{
 		return NULL;
 	}
-
 }
 
 ComponentID ComponentManager::allocatePhysicsComponent(const ComponentID& positionComponentID, const PhysicsData& data)
@@ -160,7 +158,6 @@ SteeringComponent* ComponentManager::getSteeringComponent(const ComponentID& id)
 	{
 		return NULL;
 	}
-
 }
 
 ComponentID ComponentManager::allocateSteeringComponent(const ComponentID& physicsComponentID, const SteeringData& data)
@@ -228,5 +225,4 @@ void ComponentManager::updateSteering(float elapsedTime)
 		assert(pPhysics != NULL);
 		pSteering->applySteering(*pPhysics);
 	}
-
 }

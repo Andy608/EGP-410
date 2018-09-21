@@ -1,6 +1,10 @@
+#ifndef COMPONENT_MANAGER_H_
+#define COMPONENT_MANAGER_H_
+
 #include <map>
 #include <Trackable.h>
 #include <MemoryPool.h>
+
 #include "Component.h"
 #include "PositionComponent.h"
 #include "PhysicsComponent.h"
@@ -15,7 +19,7 @@ public:
 	void clear();
 
 	PositionComponent* getPositionComponent(const ComponentID& id);
-	ComponentID allocatePositionComponent(const PositionData& data = ZERO_POSITION_DATA, bool shouldWrap=true);
+	ComponentID allocatePositionComponent(const PositionData& data = ZERO_POSITION_DATA, bool shouldWrap = true);
 	void deallocatePositionComponent(const ComponentID& id);
 
 	PhysicsComponent* getPhysicsComponent(const ComponentID& id);
@@ -31,8 +35,10 @@ public:
 private:
 	std::map<ComponentID, PositionComponent*> mPositionComponentMap;
 	MemoryPool mPositionPool;
+
 	std::map<ComponentID, PhysicsComponent*> mPhysicsComponentMap;
 	MemoryPool mPhysicsPool;
+	
 	std::map<ComponentID, SteeringComponent*> mSteeringComponentMap;
 	MemoryPool mSteeringPool;
 
@@ -43,3 +49,5 @@ private:
 	void updatePhysics(float elapsedTime);
 	void updateSteering(float elapsedTime);
 };
+
+#endif

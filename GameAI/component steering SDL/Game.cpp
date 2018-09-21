@@ -4,6 +4,8 @@
 #include <sstream>
 #include <SDL.h>
 
+#include <time.h>
+
 #include "Game.h"
 #include "GraphicsSystem.h"
 #include "GraphicsBuffer.h"
@@ -13,7 +15,6 @@
 #include "Sprite.h"
 #include "SpriteManager.h"
 #include "Timer.h"
-#include "PlayerMoveToMessage.h"
 #include "ComponentManager.h"
 #include "UnitManager.h"
 #include "InputSystem.h"
@@ -24,19 +25,21 @@ const int WIDTH = 1024;
 const int HEIGHT = 768;
 const Uint32 MAX_UNITS = 100;
 
-Game::Game()
-	:mpGraphicsSystem(NULL)
-	,mpGraphicsBufferManager(NULL)
-	,mpSpriteManager(NULL)
-	,mpLoopTimer(NULL)
-	,mpMasterTimer(NULL)
-	,mpFont(NULL)
-	,mShouldExit(false)
-	,mBackgroundBufferID("")
-	,mpMessageManager(NULL)
-	,mpComponentManager(NULL)
-	,mpUnitManager(NULL)
+Game::Game() :
+	mpGraphicsSystem(NULL),
+	mpGraphicsBufferManager(NULL),
+	mpSpriteManager(NULL),
+	mpLoopTimer(NULL),
+	mpMasterTimer(NULL),
+	mpFont(NULL),
+	mShouldExit(false),
+	mBackgroundBufferID(""),
+	mpMessageManager(NULL),
+	mpComponentManager(NULL),
+	mpUnitManager(NULL),
+	mpInputSystem(NULL)
 {
+
 }
 
 Game::~Game()
@@ -46,6 +49,9 @@ Game::~Game()
 
 bool Game::init()
 {
+	//Initialize the random seed.
+	srand(static_cast<unsigned int>(time(NULL)));
+	
 	mShouldExit = false;
 
 	//create Timers
@@ -54,7 +60,9 @@ bool Game::init()
 
 	//create and init GraphicsSystem
 	mpGraphicsSystem = new GraphicsSystem();
+
 	bool goodGraphics = mpGraphicsSystem->init( WIDTH, HEIGHT );
+	
 	if(!goodGraphics) 
 	{
 		fprintf(stderr, "failed to initialize GraphicsSystem object!\n");
@@ -63,7 +71,6 @@ bool Game::init()
 
 	mpGraphicsBufferManager = new GraphicsBufferManager(mpGraphicsSystem);
 	mpSpriteManager = new SpriteManager();
-
 
 	mpMessageManager = new GameMessageManager();
 	mpComponentManager = new ComponentManager(MAX_UNITS);
@@ -80,25 +87,30 @@ bool Game::init()
 	mpFont = new Font("cour.ttf", 24);
 	
 	//setup sprites
-	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( mBackgroundBufferID );
-	if( pBackGroundBuffer != NULL )
+	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(mBackgroundBufferID);
+	if(pBackGroundBuffer != NULL)
 	{
-		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight() );
+		mpSpriteManager->createAndManageSprite(BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight());
 	}
-	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer( mPlayerIconBufferID );
+	
+	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(mPlayerIconBufferID);
 	Sprite* pArrowSprite = NULL;
-	if( pPlayerBuffer != NULL )
+	
+	if(pPlayerBuffer != NULL)
 	{
-		pArrowSprite = mpSpriteManager->createAndManageSprite( PLAYER_ICON_SPRITE_ID, pPlayerBuffer, 0, 0, (float)pPlayerBuffer->getWidth(), (float)pPlayerBuffer->getHeight() );
+		pArrowSprite = mpSpriteManager->createAndManageSprite(PLAYER_ICON_SPRITE_ID, pPlayerBuffer, 0, 0, (float)pPlayerBuffer->getWidth(), (float)pPlayerBuffer->getHeight());
 	}
+
 	GraphicsBuffer* pAIBuffer = mpGraphicsBufferManager->getBuffer(mEnemyIconBufferID);
 	Sprite* pEnemyArrow = NULL;
+	
 	if (pAIBuffer != NULL)
 	{
 		pEnemyArrow = mpSpriteManager->createAndManageSprite(AI_ICON_SPRITE_ID, pAIBuffer, 0, 0, (float)pAIBuffer->getWidth(), (float)pAIBuffer->getHeight());
 	}
 
 	GraphicsBuffer* pTargetBuffer = mpGraphicsBufferManager->getBuffer(mTargetBufferID);
+	
 	if (pTargetBuffer != NULL)
 	{
 		mpSpriteManager->createAndManageSprite(TARGET_SPRITE_ID, pTargetBuffer, 0, 0, (float)pTargetBuffer->getWidth(), (float)pTargetBuffer->getHeight());
@@ -108,15 +120,6 @@ bool Game::init()
 	Unit* pUnit = mpUnitManager->createPlayerUnit(*pArrowSprite);
 	pUnit->setShowTarget(true);
 	pUnit->setSteering(Steering::ARRIVE, ZERO_VECTOR2D);
-
-	////create 2 enemies
-	//pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth() / 2.0f, (float)gpGame->getGraphicsSystem()->getHeight() / 2.0f), 0.0f));
-	//pUnit->setShowTarget(true);
-	//pUnit->setSteering(Steering::WANDER, ZERO_VECTOR2D, PLAYER_UNIT_ID);
-
-	//pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D(0.0f, (float)gpGame->getGraphicsSystem()->getHeight()-1), 0.0f));
-	//pUnit->setShowTarget(false);
-	//pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
 
 	return true;
 }
@@ -164,7 +167,7 @@ void Game::processLoop()
 	mpComponentManager->update(TARGET_ELAPSED_MS);
 	
 	//draw background
-	Sprite* pBackgroundSprite = mpSpriteManager->getSprite( BACKGROUND_SPRITE_ID );
+	Sprite* pBackgroundSprite = mpSpriteManager->getSprite(BACKGROUND_SPRITE_ID);
 	GraphicsBuffer* pDest = mpGraphicsSystem->getBackBuffer();
 	mpGraphicsSystem->draw(*pDest, *pBackgroundSprite, 0.0f, 0.0f);
 
@@ -186,9 +189,6 @@ void Game::processLoop()
 	mpGraphicsSystem->swap();
 
 	mpMessageManager->processMessagesForThisframe();
-
-	//get input - should be moved someplace better
-	//SDL_PumpEvents();
 }
 
 bool Game::endLoop()

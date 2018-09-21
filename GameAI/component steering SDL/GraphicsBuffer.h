@@ -1,7 +1,8 @@
-#pragma once
+#ifndef GRAPHICS_BUFFER_H_
+#define GRAPHICS_BUFFER_H_
 
-#include "Trackable.h"
 #include <string>
+#include <Trackable.h>
 
 class Vector2D;
 class GraphicsSystem;
@@ -13,10 +14,9 @@ struct SDL_Renderer;
 
 const int INVALID_DIMENSION = -1;
 
-class GraphicsBuffer:public Trackable
+class GraphicsBuffer : public Trackable
 {
 public:
-
 	//accessors
 	int getWidth() const;
 	int getHeight() const;
@@ -25,9 +25,10 @@ public:
 
 private:
 	SDL_Texture* mpTexture;
-	bool mValid=false;
+	bool mValid = false;
 
-	GraphicsBuffer(SDL_Renderer* pRenderer);//used to create the back buffer
+	//used to create the back buffer
+	GraphicsBuffer(SDL_Renderer* pRenderer);
 	GraphicsBuffer(SDL_Texture* pTexture);
 	~GraphicsBuffer();
 
@@ -38,5 +39,6 @@ private:
 	//invalidate copy constructor and assignment operator
 	GraphicsBuffer(const GraphicsBuffer& rhs);
 	GraphicsBuffer& operator=(const GraphicsBuffer& rhs);
-
 };
+
+#endif

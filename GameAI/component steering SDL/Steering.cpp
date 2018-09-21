@@ -1,6 +1,5 @@
 #include "Steering.h"
 
-
 void Steering::update()
 {
 	Steering* pTemp = getSteering();

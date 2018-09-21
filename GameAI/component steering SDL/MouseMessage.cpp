@@ -11,7 +11,7 @@ void MouseMessage::process()
 		{
 			//Steer player to clicked position.
 			Unit* pPlayer = gpGame->getUnitManager()->getPlayerUnit();
-			pPlayer->setSteering(Steering::ARRIVE, mMousePosition);
+			pPlayer->setSteering(Steering::ARRIVE_AND_FACE, mMousePosition);
 		}
 	}
 }

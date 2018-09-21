@@ -1,4 +1,5 @@
 #include <cassert>
+
 #include "Game.h"
 #include "GameMessageManager.h"
 #include "GameMessage.h"
@@ -7,13 +8,13 @@ using namespace std;
 
 GameMessageManager::GameMessageManager(Uint32 size)
 {
-	mMessages = new CircularQueue<GameMessage *>(size);
+	mMessages = new CircularQueue<GameMessage*>(size);
 }
 
 GameMessageManager::~GameMessageManager()
 {
 	GameMessage* pMessage;
-	while( mMessages->popFront(pMessage))
+	while(mMessages->popFront(pMessage))
 	{
 		delete pMessage;
 	}
@@ -42,7 +43,7 @@ void GameMessageManager::processMessagesForThisframe()
 	}
 }
 
-void GameMessageManager::addMessage( GameMessage* pMessage, int delay )
+void GameMessageManager::addMessage(GameMessage* pMessage, int delay)
 {
 	double currentTime = gpGame->getCurrentTime();
 
@@ -51,6 +52,6 @@ void GameMessageManager::addMessage( GameMessage* pMessage, int delay )
 	pMessage->mScheduledTime = currentTime + delay;
 
 	//put it in the message list
-	bool success = mMessages->pushBack( pMessage );
+	bool success = mMessages->pushBack(pMessage);
 	assert(success);
 }

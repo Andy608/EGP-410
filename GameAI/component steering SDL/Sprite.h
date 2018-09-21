@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SPRITE_H_
+#define SPRITE_H_
 
 #include <string>
 
@@ -14,7 +15,7 @@ Champlain College
 
 class GraphicsBuffer;
 
-class Sprite:public Trackable
+class Sprite : public Trackable
 {
 public:
 	Sprite(GraphicsBuffer* pBuffer, int srcX, int srcY, int width, int height);
@@ -33,3 +34,5 @@ private:
 	Vector2D mSrcLoc;
 	Vector2D mSize;
 };
+
+#endif

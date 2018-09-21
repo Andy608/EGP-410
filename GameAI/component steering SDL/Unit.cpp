@@ -11,17 +11,19 @@
 #include "SpriteManager.h"
 
 
-Unit::Unit(const Sprite& sprite) 
-	:mSprite(sprite)
-	,mPositionComponentID(INVALID_COMPONENT_ID)
-	,mPhysicsComponentID(INVALID_COMPONENT_ID)
-	,mSteeringComponentID(INVALID_COMPONENT_ID)
-	,mShowTarget(false)
+Unit::Unit(const Sprite& sprite) :
+	mSprite(sprite),
+	mPositionComponentID(INVALID_COMPONENT_ID),
+	mPhysicsComponentID(INVALID_COMPONENT_ID),
+	mSteeringComponentID(INVALID_COMPONENT_ID),
+	mShowTarget(false)
 {
+
 }
 
 Unit::~Unit()
 {
+
 }
 
 void Unit::draw() const
@@ -36,6 +38,7 @@ void Unit::draw() const
 		SteeringComponent* pSteering = getSteeringComponent();
 		assert(pSteering != NULL);
 		const Vector2D& targetLoc = pSteering->getTargetLoc();
+
 		if (&targetLoc != &ZERO_VECTOR2D)
 		{
 			Sprite* pTargetSprite = gpGame->getSpriteManager()->getSprite(TARGET_SPRITE_ID);

@@ -31,6 +31,7 @@ int main(int argc, char **argv)
 
 	//create the global game object
 	gpGame = new Game;
+	
 	//init the game
 	bool goodGame = gpGame->init();
 	if (!goodGame)
@@ -64,7 +65,6 @@ int main(int argc, char **argv)
 		gpPerformanceTracker->stopTracking("loop");
 		cout << "loop took:" << gpPerformanceTracker->getElapsedTime("loop") << "ms";
 		cout << "draw took:" << gpPerformanceTracker->getElapsedTime("draw") << "ms\n";
-
 	}
 
 	gpGame->cleanup();

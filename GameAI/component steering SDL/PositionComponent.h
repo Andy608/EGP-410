@@ -1,13 +1,15 @@
-#pragma once
+#ifndef POSITION_COMPONENT_H_
+#define POSITION_COMPONENT_H_
 
-#include <Trackable.h>
 #include <Vector2D.h>
+#include <Trackable.h>
+
 #include "Component.h"
 
-struct PositionData:public Trackable
+struct PositionData : public Trackable
 {
-	PositionData() :pos(ZERO_VECTOR2D), facing(0.0f){};
-	PositionData(const Vector2D& thePos, float theFacing) :pos(thePos), facing(theFacing) {};
+	inline PositionData() : pos(ZERO_VECTOR2D), facing(0.0f) {};
+	inline PositionData(const Vector2D& thePos, float theFacing) : pos(thePos), facing(theFacing) {};
 
 	Vector2D pos;
 	float facing;
@@ -15,10 +17,10 @@ struct PositionData:public Trackable
 
 const PositionData ZERO_POSITION_DATA;
 
-class PositionComponent :public Component
+class PositionComponent : public Component
 {
 public:
-	PositionComponent(const ComponentID& id, bool shouldWrap = true) :Component(id), mWrap(shouldWrap) {};
+	PositionComponent(const ComponentID& id, bool shouldWrap = true) : Component(id), mWrap(shouldWrap) {};
 	~PositionComponent() {};
 	
 	//getters and setters
@@ -34,10 +36,13 @@ public:
 
 private:
 	PositionData mData;
-	bool mWrap;//should we wrap around the screen?
 
+	//should we wrap around the screen?
+	bool mWrap;
 
 	void wrapCoords();
 
 	friend class ComponentManager;
 };
+
+#endif

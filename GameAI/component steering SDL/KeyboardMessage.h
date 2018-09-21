@@ -10,7 +10,7 @@ public:
 		mInputCode(inputCode),
 		mIsKeyDown(isKeyDown),
 		mIsNewKeyPress(isNewKeyPress),
-		GameMessage(MessageType::KEYBOARD_MESSAGE) {}
+		GameMessage(MessageType::KEYBOARD_MESSAGE) {};
 
 	inline virtual ~KeyboardMessage() {};
 

@@ -5,6 +5,10 @@
 #include "UnitManager.h"
 #include "Unit.h"
 
+const float ArriveSteering::msTARGET_RADIUS = 0.01f;
+const float ArriveSteering::msSLOW_RADIUS = 300.0f;
+const float ArriveSteering::msTIME_TO_TARGET = 0.1f;
+
 ArriveSteering::ArriveSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
 	Steering(Steering::ARRIVE, ownerID, targetLoc, targetID)
 {
@@ -13,10 +17,6 @@ ArriveSteering::ArriveSteering(const UnitID& ownerID, const Vector2D& targetLoc,
 
 Steering* ArriveSteering::getSteering()
 {
-	static float targetRadius = 0.1f;
-	static float slowRadius = 200.0f;
-	static float timeToTarget = 0.1f;
-
 	Vector2D direction;
 	float distance;
 	float targetSpeed;
@@ -34,24 +34,25 @@ Steering* ArriveSteering::getSteering()
 
 	direction = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 	distance = direction.getLength();
+	//std::cout << "D: " << std::to_string(distance) << std::endl;
 
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 
-	if (distance < targetRadius)
+	if (distance < msTARGET_RADIUS)
 	{
 		//We are done! Return no steering.
-		std::cout << "IN THE TARGET RADIUS!" << std::endl;
-		return NULL;
+		data.acc = 0;
+		data.vel = 0;
 	}
 	else
 	{
-		if (distance > slowRadius)
+		if (distance > msSLOW_RADIUS)
 		{
 			targetSpeed = pOwner->getMaxSpeed();
 		}
 		else
 		{
-			targetSpeed = pOwner->getMaxSpeed() * distance / slowRadius;
+			targetSpeed = pOwner->getMaxSpeed() * distance / msSLOW_RADIUS;
 		}
 
 		targetVelocity = direction;
@@ -59,7 +60,7 @@ Steering* ArriveSteering::getSteering()
 		targetVelocity *= targetSpeed;
 
 		data.acc = targetVelocity - data.vel;
-		data.acc /= timeToTarget;
+		data.acc /= msTIME_TO_TARGET;
 
 		if (data.acc.getLengthSquared() > pOwner->getMaxAcc() * pOwner->getMaxAcc())
 		{

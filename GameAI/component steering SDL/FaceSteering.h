@@ -2,6 +2,7 @@
 #define FACE_STEERING_H_
 
 #include <Trackable.h>
+
 #include "Steering.h"
 #include "AlignSteering.h"
 
@@ -14,6 +15,9 @@ public:
 
 protected:
 	AlignSteering mAlignSteering;
+
+private:
+	static const float msTARGET_RADIUS;
 };
 
 #endif

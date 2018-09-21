@@ -21,8 +21,8 @@ GraphicsBuffer::GraphicsBuffer(SDL_Renderer* pRenderer)
 
 }
 
-GraphicsBuffer::GraphicsBuffer(SDL_Texture* pTexture)
-	:mpTexture(pTexture)
+GraphicsBuffer::GraphicsBuffer(SDL_Texture* pTexture) : 
+	mpTexture(pTexture)
 {
 	if (pTexture != NULL)
 	{

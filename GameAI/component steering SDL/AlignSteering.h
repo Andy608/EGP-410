@@ -2,6 +2,7 @@
 #define ALIGN_STEERING_H_
 
 #include <Trackable.h>
+
 #include "Steering.h"
 
 class AlignSteering : public Steering
@@ -17,6 +18,10 @@ protected:
 	float mTargetAngle;
 
 private:
+	static const float msTARGET_RADIUS;
+	static const float msSLOW_RADIUS;
+	static const float msTIME_TO_TARGET;
+
 	//Maps the rotation between -PI and PI.
 	void mapToRange(float& rotation);
 };

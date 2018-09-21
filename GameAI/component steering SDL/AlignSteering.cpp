@@ -5,6 +5,10 @@
 #include "UnitManager.h"
 #include "Unit.h"
 
+const float AlignSteering::msTARGET_RADIUS = 1.0f / 180.0f * 3.14159f;
+const float AlignSteering::msSLOW_RADIUS = 250.0f / 180.0f * 3.14159f;
+const float AlignSteering::msTIME_TO_TARGET = 0.1f;
+
 AlignSteering::AlignSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
 	Steering(Steering::ALIGN, ownerID, targetLoc, targetID),
 	mIsTargetAngleGiven(false),
@@ -21,16 +25,11 @@ void AlignSteering::setTargetAngle(const float targetAngle)
 
 Steering* AlignSteering::getSteering()
 {
-	static float targetRadius = 0.1f / 180.0f * 3.14159;
-	static float slowRadius = 250.0f / 180.0f * 3.14159;
-	static float timeToTarget = 0.1f;
-
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 
 	float maxRotationalAcc = pOwner->getMaxRotAcc();
 	float maxRotationalVel = pOwner->getMaxRotVel();
 
-	float direction;
 	float rotationVelocity;
 	float targetRotationVelocity;
 
@@ -48,7 +47,7 @@ Steering* AlignSteering::getSteering()
 		*/
 		if (!mIsTargetAngleGiven)
 		{
-			mTargetAngle = pTarget->getFacing() - pOwner->getFacing() + (90.0f / 180.0f * 3.14159);
+			mTargetAngle = pTarget->getFacing() - pOwner->getFacing();
 		}
 	}
 
@@ -57,33 +56,35 @@ Steering* AlignSteering::getSteering()
 
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 
-	if (rotationVelocity < targetRadius)
+	if (rotationVelocity < msTARGET_RADIUS)
 	{
 		//We are done! Return no steering.
-		std::cout << "IN THE TARGET RADIUS!" << std::endl;
-		return NULL;
-	}
-
-	if (rotationVelocity > slowRadius)
-	{
-		targetRotationVelocity = maxRotationalVel;
+		data.rotAcc = 0;
+		data.rotVel = 0;
 	}
 	else
 	{
-		targetRotationVelocity = maxRotationalVel * rotationVelocity / slowRadius;
-	}
+		if (rotationVelocity > msSLOW_RADIUS)
+		{
+			targetRotationVelocity = maxRotationalVel;
+		}
+		else
+		{
+			targetRotationVelocity = maxRotationalVel * rotationVelocity / msSLOW_RADIUS;
+		}
 
-	targetRotationVelocity *= mTargetAngle / rotationVelocity;
+		targetRotationVelocity *= mTargetAngle / rotationVelocity;
 
-	data.rotAcc = (targetRotationVelocity - data.rotVel);
-	data.rotAcc /= timeToTarget;
+		data.rotAcc = (targetRotationVelocity - data.rotVel);
+		data.rotAcc /= msTIME_TO_TARGET;
 
-	float angularAcc = abs(data.rotAcc);
+		float angularAcc = abs(data.rotAcc);
 
-	if (angularAcc > maxRotationalAcc)
-	{
-		data.rotAcc /= angularAcc;
-		data.rotAcc *= maxRotationalAcc;
+		if (angularAcc > maxRotationalAcc)
+		{
+			data.rotAcc /= angularAcc;
+			data.rotAcc *= maxRotationalAcc;
+		}
 	}
 
 	this->mData = data;
@@ -92,7 +93,7 @@ Steering* AlignSteering::getSteering()
 
 void AlignSteering::mapToRange(float& rotation)
 {
-	static const float PI = 3.14159;
+	static const float PI = 3.14159f;
 
 	if (rotation > PI)
 	{

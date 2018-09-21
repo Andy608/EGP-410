@@ -28,6 +28,7 @@ void PhysicsComponent::integrate(PositionComponent& posComponent, float elapsedT
 			mData.acc.normalize();
 			mData.acc *= mData.maxAccMagnitude;
 		}
+
 		if (mData.rotAcc > mData.maxRotAcc)
 		{
 			mData.maxRotAcc = mData.maxRotAcc;
@@ -42,12 +43,13 @@ void PhysicsComponent::integrate(PositionComponent& posComponent, float elapsedT
 		mData.rotVel += (mData.rotAcc * elapsedTime);
 
 		//cap velocities
-		if (mData.vel.getLengthSquared() > (mData.maxSpeed * mData.maxSpeed) )
+		if (mData.vel.getLengthSquared() > (mData.maxSpeed * mData.maxSpeed))
 		{
 			mData.vel.normalize();
 			mData.vel *= mData.maxSpeed;
 			mData.acc = ZERO_VECTOR2D;
 		}
+
 		if (mData.rotVel > mData.maxRotVel)
 		{
 			mData.rotVel = mData.maxRotVel;
@@ -63,5 +65,4 @@ void PhysicsComponent::integrate(PositionComponent& posComponent, float elapsedT
 		posComponent.modPosition(mData.vel * elapsedTime);
 		posComponent.modFacing(mData.rotVel * elapsedTime);
 	}
-
 }

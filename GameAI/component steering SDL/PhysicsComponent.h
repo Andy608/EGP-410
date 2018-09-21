@@ -1,9 +1,11 @@
-#pragma once
+#ifndef PHYSICS_COMPONENT_H_
+#define PHYSICS_COMPONENT_H_
 
-#include "Component.h"
+#include <cfloat>
 #include <Vector2D.h>
 #include <Trackable.h>
-#include <cfloat>
+
+#include "Component.h"
 
 class PositionComponent;
 
@@ -14,35 +16,26 @@ static const float MAX_ROT_VEL = 5.0f;
 
 struct PhysicsData : public Trackable
 {
-	PhysicsData(
-		const Vector2D& theVel
-		, const Vector2D& theAcc
-		, float theRotVel
-		, float theRotAcc
-		, float theMaxSpeed = MAX_SPEED
-		, float theMaxAcc = MAX_ACC
-		, float theMaxRotVel = MAX_ROT_VEL
-		, float theMaxRotAcc = MAX_ROT_ACC) 
-		:vel(theVel)
-		, acc(theAcc)
-		, rotVel(theRotVel)
-		, rotAcc(theRotAcc)
-		, maxSpeed(theMaxSpeed)
-		, maxAccMagnitude(theMaxAcc)
-		, maxRotVel(theMaxRotVel)
-		, maxRotAcc(theRotAcc)
-	{};
+	inline PhysicsData(const Vector2D& theVel, const Vector2D& theAcc, float theRotVel, float theRotAcc, 
+		float theMaxSpeed = MAX_SPEED, float theMaxAcc = MAX_ACC, float theMaxRotVel = MAX_ROT_VEL, float theMaxRotAcc = MAX_ROT_ACC) : 
+		vel(theVel), 
+		acc(theAcc), 
+		rotVel(theRotVel), 
+		rotAcc(theRotAcc), 
+		maxSpeed(theMaxSpeed), 
+		maxAccMagnitude(theMaxAcc),
+		maxRotVel(theMaxRotVel), 
+		maxRotAcc(theRotAcc) {};
 
-	PhysicsData() 
-		:vel(ZERO_VECTOR2D)
-		, acc(ZERO_VECTOR2D)
-		, rotVel(0.0f)
-		, rotAcc(0.0f)
-		, maxSpeed(MAX_SPEED)
-		, maxAccMagnitude(MAX_ACC)
-		, maxRotVel(MAX_ROT_VEL)
-		, maxRotAcc(MAX_ROT_ACC)
-	{};
+	inline PhysicsData() : 
+		vel(ZERO_VECTOR2D), 
+		acc(ZERO_VECTOR2D),
+		rotVel(0.0f),
+		rotAcc(0.0f),
+		maxSpeed(MAX_SPEED),
+		maxAccMagnitude(MAX_ACC),
+		maxRotVel(MAX_ROT_VEL),
+		maxRotAcc(MAX_ROT_ACC) {};
 
 	Vector2D vel;
 	Vector2D acc;
@@ -56,11 +49,10 @@ struct PhysicsData : public Trackable
 
 const PhysicsData ZERO_PHYSICS_DATA;
 
-class PhysicsComponent :public Component
+class PhysicsComponent : public Component
 {
 public:
-
-	void setData(const PhysicsData& data){ mData = data; };
+	void setData(const PhysicsData& data) { mData = data; };
 	void modData(const PhysicsData& data);
 	const PhysicsData& getData() const { return mData; };
 	const Vector2D& getVelocity() const { return mData.vel; };
@@ -71,10 +63,10 @@ public:
 private:
 	PhysicsData mData;
 	ComponentID mPositionComponentID;
-	PositionComponent* mpPositionComponent=NULL;
+	PositionComponent* mpPositionComponent = NULL;
 
-	PhysicsComponent(const ComponentID& id, const ComponentID& posID) :Component(id), mPositionComponentID(posID){};
-	~PhysicsComponent(){};
+	inline PhysicsComponent(const ComponentID& id, const ComponentID& posID) : Component(id), mPositionComponentID(posID) {};
+	inline ~PhysicsComponent() {};
 
 	void integrate(PositionComponent& posComponent, float elapsedTime);
 
@@ -82,3 +74,5 @@ private:
 
 	friend class ComponentManager;
 };
+
+#endif

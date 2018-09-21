@@ -5,9 +5,10 @@
 
 using namespace std;
 
-GraphicsBufferManager::GraphicsBufferManager(GraphicsSystem* pSystem)
-	:mpGraphicsSystem(pSystem)
+GraphicsBufferManager::GraphicsBufferManager(GraphicsSystem* pSystem) : 
+	mpGraphicsSystem(pSystem)
 {
+
 }
 
 GraphicsBufferManager::~GraphicsBufferManager()
@@ -17,12 +18,13 @@ GraphicsBufferManager::~GraphicsBufferManager()
 
 void GraphicsBufferManager::init()
 {
+
 }
 
 void GraphicsBufferManager::clear()
 {
 	map<GraphicsBufferID,GraphicsBuffer*>::iterator iter;
-	for( iter = mBuffers.begin(); iter != mBuffers.end(); ++iter )
+	for(iter = mBuffers.begin(); iter != mBuffers.end(); ++iter)
 	{
 		GraphicsBuffer* pBuff = iter->second;
 		delete pBuff;
@@ -31,16 +33,17 @@ void GraphicsBufferManager::clear()
 	mBuffers.clear();
 }
 
-GraphicsBuffer* GraphicsBufferManager::loadBuffer( const GraphicsBufferID& id, const string& filename )
+GraphicsBuffer* GraphicsBufferManager::loadBuffer(const GraphicsBufferID& id, const string& filename)
 {
 	GraphicsBuffer* pBuffer = NULL;
 	
 	//make sure this isn't already out there
-	std::map<GraphicsBufferID, GraphicsBuffer*>::iterator iter = mBuffers.find( id );
-	if( iter == mBuffers.end() )//not already in there
+	std::map<GraphicsBufferID, GraphicsBuffer*>::iterator iter = mBuffers.find(id);
+
+	if(iter == mBuffers.end())//not already in there
 	{
-		pBuffer = new GraphicsBuffer( mpGraphicsSystem->loadTexture(filename) );
-		if( pBuffer->isValid() )
+		pBuffer = new GraphicsBuffer(mpGraphicsSystem->loadTexture(filename));
+		if(pBuffer->isValid())
 		{
 			mBuffers[id] = pBuffer;
 		}
@@ -50,6 +53,7 @@ GraphicsBuffer* GraphicsBufferManager::loadBuffer( const GraphicsBufferID& id, c
 			pBuffer = NULL;
 		}
 	}
+
 	return pBuffer;
 }
 
@@ -57,6 +61,7 @@ GraphicsBuffer* GraphicsBufferManager::manageBuffer(const GraphicsBufferID& id, 
 {
 	//make sure this isn't already out there
 	std::map<GraphicsBufferID, GraphicsBuffer*>::iterator iter = mBuffers.find(id);
+	
 	if (iter == mBuffers.end())//not already in there
 	{
 		if (pBuffer->isValid())
@@ -79,6 +84,7 @@ GraphicsBuffer* GraphicsBufferManager::createGraphicsBuffer(const GraphicsBuffer
 
 	//make sure this isn't already out there
 	std::map<GraphicsBufferID, GraphicsBuffer*>::iterator iter = mBuffers.find(id);
+	
 	if (iter == mBuffers.end())//not already in there
 	{
 		pBuffer = new GraphicsBuffer(mpGraphicsSystem->createTexture(width,height));
@@ -93,14 +99,15 @@ GraphicsBuffer* GraphicsBufferManager::createGraphicsBuffer(const GraphicsBuffer
 			pBuffer = NULL;
 		}
 	}
-	return pBuffer;
 
+	return pBuffer;
 }
 
 void GraphicsBufferManager::deleteBuffer(const GraphicsBufferID& id)
 {
 	//find the entry
 	map<GraphicsBufferID, GraphicsBuffer*>::iterator iter = mBuffers.find(id);
+	
 	if (iter != mBuffers.end())//found!
 	{
 		GraphicsBuffer* pBuff = iter->second;
@@ -114,6 +121,7 @@ GraphicsBuffer* GraphicsBufferManager::getBuffer(const GraphicsBufferID& id)
 	GraphicsBuffer* pReturn = NULL;
 
 	map<GraphicsBufferID, GraphicsBuffer*>::iterator iter = mBuffers.find(id);
+	
 	if (iter != mBuffers.end())//found?
 	{
 		pReturn = iter->second;

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UNIT_H_
+#define UNIT_H_
 
 #include <Trackable.h>
 #include <DeanLibDefines.h>
@@ -20,7 +21,6 @@ class UnitManager;
 
 const Uint32 DEFAULT_QUEUE_CAPACITY = 8;
 
-
 //class Unit : public TransactionProcessor
 class Unit : public Trackable
 {
@@ -32,10 +32,12 @@ public:
 	PositionComponent* getPositionComponent() const;
 	PhysicsComponent* getPhysicsComponent() const;
 	SteeringComponent* getSteeringComponent() const;
+
 	float getMaxAcc() const { return mMaxAcc; };
 	float getMaxSpeed() const { return mMaxSpeed; };
 	float getMaxRotAcc() const { return mMaxRotAcc; };
 	float getMaxRotVel() const { return mMaxRotVel; };
+
 	void setShowTarget(bool val) { mShowTarget = val; };
 
 	void setSteering(Steering::SteeringType type, Vector2D targetLoc = ZERO_VECTOR2D, UnitID targetUnitID = INVALID_UNIT_ID);
@@ -61,3 +63,5 @@ private:
 
 	friend class UnitManager;
 };
+
+#endif

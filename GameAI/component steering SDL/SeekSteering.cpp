@@ -12,10 +12,11 @@ SeekSteering::SeekSteering(const UnitID& ownerID, const Vector2D& targetLoc, con
 
 Steering* SeekSteering::getSteering()
 {
-	Vector2D diff;
+	Vector2D distance;
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
+	PhysicsData data = pOwner->getPhysicsComponent()->getData();
+
 	//are we seeking a location or a unit?
-	
 	if (mTargetID != INVALID_UNIT_ID)
 	{
 		//seeking unit
@@ -26,22 +27,17 @@ Steering* SeekSteering::getSteering()
 
 	if (mType == Steering::SEEK)
 	{
-		diff = mTargetLoc - pOwner->getPositionComponent()->getPosition();
+		distance = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 	}
 	else
 	{
-		diff = pOwner->getPositionComponent()->getPosition() - mTargetLoc;
+		distance = pOwner->getPositionComponent()->getPosition() - mTargetLoc;
 	}
 
-	diff.normalize();
-	diff *= pOwner->getMaxAcc();
+	distance.normalize();
+	distance *= pOwner->getMaxAcc();
 
-	float velDirection = atan2(diff.getY(), diff.getX()) + (3.14159 / 2.0f);
-	pOwner->getPositionComponent()->setFacing(velDirection);
-
-	PhysicsData data = pOwner->getPhysicsComponent()->getData();
-	data.acc = diff;
-	//data.rotVel = 1.0f;
+	data.acc = distance;
 	this->mData = data;
 	return this;
 }

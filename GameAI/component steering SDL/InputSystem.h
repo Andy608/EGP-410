@@ -1,10 +1,10 @@
 #ifndef INPUT_SYSTEM_H_
 #define INPUT_SYSTEM_H_
 
-#include <Trackable.h>
 #include <SDL.h>
 #include <SDL_keycode.h>
 #include <Vector2D.h>
+#include <Trackable.h>
 
 enum EnumMouseInput
 {

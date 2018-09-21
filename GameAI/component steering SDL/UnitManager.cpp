@@ -10,9 +10,10 @@ UnitID UnitManager::msNextUnitID = PLAYER_UNIT_ID + 1;
 
 using namespace std;
 
-UnitManager::UnitManager(Uint32 maxSize)
-	:mPool(maxSize, sizeof(Unit))
+UnitManager::UnitManager(Uint32 maxSize) :
+	mPool(maxSize, sizeof(Unit))
 {
+
 }
 
 Unit* UnitManager::createUnit(const Sprite& sprite, bool shouldWrap, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/, const UnitID& id)
@@ -51,38 +52,37 @@ Unit* UnitManager::createUnit(const Sprite& sprite, bool shouldWrap, const Posit
 		pUnit->mMaxAcc = MAX_ACC;
 		pUnit->mMaxRotAcc = MAX_ROT_ACC;
 		pUnit->mMaxRotVel = MAX_ROT_VEL;
-
 	}
 
 	return pUnit;
 }
-
 
 Unit* UnitManager::createPlayerUnit(const Sprite& sprite, bool shouldWrap /*= true*/, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/)
 {
 	return createUnit(sprite, shouldWrap, posData, physicsData, PLAYER_UNIT_ID);
 }
 
-
 Unit* UnitManager::createRandomUnit(const Sprite& sprite)
 {
-
 	int posX = rand() % gpGame->getGraphicsSystem()->getWidth();
 	int posY = rand() % gpGame->getGraphicsSystem()->getHeight();
 	int velX = rand() % 50 - 25;
 	int velY = rand() % 40 - 20;
-	Unit* pUnit = createUnit(sprite, false, PositionData(Vector2D(posX,posY),0), PhysicsData(Vector2D(velX,velY),Vector2D(0.1f,0.1f), 0.1f, 0.05f));
+
+	Unit* pUnit = createUnit(sprite, true, PositionData(Vector2D(posX,posY), 0)/*, PhysicsData(Vector2D(velX, velY), Vector2D(0.1f, 0.1f), 0.1f, 0.05f)*/);
+
 	if (pUnit != NULL)
 	{
-		//pUnit->setSteering(Steering::SEEK, Vector2D(rand() % gpGame->getGraphicsSystem()->getWidth(), rand() % gpGame->getGraphicsSystem()->getHeight()));
-		pUnit->setSteering(Steering::SEEK, Vector2D(gpGame->getGraphicsSystem()->getWidth()/2, gpGame->getGraphicsSystem()->getHeight()/2));
+		pUnit->setSteering(Steering::WANDER_AND_CHASE, Vector2D(rand() % gpGame->getGraphicsSystem()->getWidth(), rand() % gpGame->getGraphicsSystem()->getHeight()));
 	}
+
 	return pUnit;
 }
 
 Unit* UnitManager::getUnit(const UnitID& id) const
 {
 	auto it = mUnitMap.find(id);
+
 	if (it != mUnitMap.end())//found?
 	{
 		return it->second;
@@ -96,6 +96,7 @@ Unit* UnitManager::getUnit(const UnitID& id) const
 void UnitManager::deleteUnit(const UnitID& id)
 {
 	auto it = mUnitMap.find(id);
+
 	if (it != mUnitMap.end())//found?
 	{
 		Unit* pUnit = it->second;//hold for later
@@ -126,6 +127,7 @@ void UnitManager::deleteRandomUnit()
 		{
 			target = 1;
 		}
+
 		Uint32 cnt = 0;
 		for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it, cnt++)
 		{
