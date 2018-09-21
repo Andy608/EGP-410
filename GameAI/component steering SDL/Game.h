@@ -16,6 +16,7 @@ class Timer;
 class ComponentManager;
 class UnitManager;
 class Vector2D;
+class InputSystem;
 
 const IDType BACKGROUND_SPRITE_ID = 0;
 const IDType PLAYER_ICON_SPRITE_ID = 1;
@@ -33,6 +34,8 @@ public:
 	bool init();//returns true if no errors, false otherwise
 	void cleanup();
 
+	void setShouldClose(bool shouldClose) { mShouldExit = shouldClose; };
+
 	//game loop
 	void beginLoop();
 	void processLoop();
@@ -44,6 +47,7 @@ public:
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
 	inline ComponentManager* getComponentManager() { return mpComponentManager; };
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
+	inline InputSystem* getInputSystem() { return mpInputSystem; };
 	inline Timer* getMasterTimer() const { return mpMasterTimer; };
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 
@@ -54,6 +58,7 @@ private:
 	GameMessageManager* mpMessageManager;
 	ComponentManager* mpComponentManager;
 	UnitManager* mpUnitManager;
+	InputSystem* mpInputSystem;
 	Font* mpFont;
 	Timer* mpLoopTimer;
 	Timer* mpMasterTimer;

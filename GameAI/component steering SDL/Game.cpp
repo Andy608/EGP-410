@@ -16,6 +16,7 @@
 #include "PlayerMoveToMessage.h"
 #include "ComponentManager.h"
 #include "UnitManager.h"
+#include "InputSystem.h"
 
 Game* gpGame = NULL;
 
@@ -67,6 +68,7 @@ bool Game::init()
 	mpMessageManager = new GameMessageManager();
 	mpComponentManager = new ComponentManager(MAX_UNITS);
 	mpUnitManager = new UnitManager(MAX_UNITS);
+	mpInputSystem = new InputSystem();
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID,"wallpaper.bmp");
@@ -107,14 +109,14 @@ bool Game::init()
 	pUnit->setShowTarget(true);
 	pUnit->setSteering(Steering::ARRIVE, ZERO_VECTOR2D);
 
-	//create 2 enemies
-	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth() / 2.0f, (float)gpGame->getGraphicsSystem()->getHeight() / 2.0f), 0.0f));
-	pUnit->setShowTarget(true);
-	pUnit->setSteering(Steering::WANDER, ZERO_VECTOR2D, PLAYER_UNIT_ID);
+	////create 2 enemies
+	//pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth() / 2.0f, (float)gpGame->getGraphicsSystem()->getHeight() / 2.0f), 0.0f));
+	//pUnit->setShowTarget(true);
+	//pUnit->setSteering(Steering::WANDER, ZERO_VECTOR2D, PLAYER_UNIT_ID);
 
-	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D(0.0f, (float)gpGame->getGraphicsSystem()->getHeight()-1), 0.0f));
-	pUnit->setShowTarget(false);
-	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
+	//pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D(0.0f, (float)gpGame->getGraphicsSystem()->getHeight()-1), 0.0f));
+	//pUnit->setShowTarget(false);
+	//pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
 
 	return true;
 }
@@ -142,6 +144,8 @@ void Game::cleanup()
 	mpMessageManager = NULL;
 	delete mpUnitManager;
 	mpUnitManager = NULL;
+	delete mpInputSystem;
+	mpInputSystem = NULL;
 	delete mpComponentManager;
 	mpComponentManager = NULL;
 }
@@ -155,6 +159,7 @@ const float TARGET_ELAPSED_MS = LOOP_TARGET_TIME / 1000.0f;
 	
 void Game::processLoop()
 {
+	mpInputSystem->update();
 	mpUnitManager->updateAll(TARGET_ELAPSED_MS);
 	mpComponentManager->update(TARGET_ELAPSED_MS);
 	
@@ -166,9 +171,8 @@ void Game::processLoop()
 	//draw units
 	mpUnitManager->drawAll();
 
-	SDL_PumpEvents();
 	int x, y;
-	SDL_GetMouseState(&x, &y);
+	mpInputSystem->getMousePosition(x, y);
 
 	//create mouse text
 	std::stringstream mousePos;
@@ -184,36 +188,7 @@ void Game::processLoop()
 	mpMessageManager->processMessagesForThisframe();
 
 	//get input - should be moved someplace better
-	SDL_PumpEvents();
-
-	if( SDL_GetMouseState(&x,&y) & SDL_BUTTON(SDL_BUTTON_LEFT) )
-	{
-		Vector2D pos( x, y );
-		GameMessage* pMessage = new PlayerMoveToMessage( pos );
-		MESSAGE_MANAGER->addMessage( pMessage, 0 );
-	}
-
-
-	
-	//all this should be moved to InputManager!!!
-	{
-		//get keyboard state
-		const Uint8 *state = SDL_GetKeyboardState(NULL);
-
-		//if escape key was down then exit the loop
-		if( state[SDL_SCANCODE_ESCAPE] )
-		{
-			mShouldExit = true;
-		}
-	}
-	
-	//MAKES ALL THE RANDOM UNITS
-
-	/*Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
-	if (pUnit == NULL)
-	{
-		mpUnitManager->deleteRandomUnit();
-	}*/
+	//SDL_PumpEvents();
 }
 
 bool Game::endLoop()

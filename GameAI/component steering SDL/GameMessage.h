@@ -5,10 +5,13 @@
 enum MessageType
 {
 	INVALID_MESSAGE_TYPE = -1,
-	PLAYER_MOVETO_MESSAGE = 0
+	PLAYER_MOVETO_MESSAGE = 0,
+	KEYBOARD_MESSAGE = 1,
+	MOUSE_MESSAGE = 2,
+	REQUEST_WINDOWCLOSE_MESSAGE = 3
 };
 
-class GameMessage: public Trackable
+class GameMessage : public Trackable
 {
 public:
 	friend class GameMessageManager;

@@ -15,7 +15,6 @@ public:
 	void processMessagesForThisframe();
 
 private:
-
 	CircularQueue<GameMessage*>* mMessages;
 };
 
