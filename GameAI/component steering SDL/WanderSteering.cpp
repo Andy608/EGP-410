@@ -25,7 +25,6 @@ Steering* WanderSteering::getSteering()
 	mTargetOrientation = mWanderOrientation + pOwner->getFacing();
 
 	Vector2D ownerDirection = floatToVector2(pOwner->getFacing());
-	ownerDirection.normalize();
 
 	mTargetLoc = pOwner->getPositionComponent()->getPosition() + ownerDirection * msWANDER_OFFSET;
 	mTargetLoc += floatToVector2(mTargetOrientation) * msWANDER_RADIUS;
