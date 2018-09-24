@@ -34,7 +34,6 @@ Steering* ArriveSteering::getSteering()
 
 	direction = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 	distance = direction.getLength();
-	//std::cout << "D: " << std::to_string(distance) << std::endl;
 
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 

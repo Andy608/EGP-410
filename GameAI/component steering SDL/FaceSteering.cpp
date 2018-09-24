@@ -22,14 +22,12 @@ Steering* FaceSteering::getSteering()
 
 	if (direction.getLengthSquared() < msTARGET_RADIUS * msTARGET_RADIUS)
 	{
-		//Maybe set rot vel and acc to 0 instead.
 		PhysicsData data = pOwner->getPhysicsComponent()->getData();
 
 		//We are done! Return no steering.
 		data.rotAcc = 0;
 		data.rotVel = 0;
 		this->mData = data;
-
 		return this;
 	}
 	else

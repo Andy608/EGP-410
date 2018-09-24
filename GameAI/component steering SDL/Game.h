@@ -28,6 +28,16 @@ const IDType TARGET_SPRITE_ID = 3;
 //how long should each frame of execution take? 30fps = 33.3ms/frame
 const float LOOP_TARGET_TIME = 33.3f;
 
+//Circle conversion constants
+const float PI = 3.14159f;
+const float TAU = 2.0f * PI;
+
+const float PI_DEG = 180.0f;
+const float TAU_DEG = 360.0f;
+
+const float DEG_TO_RAD = PI / PI_DEG;
+const float RAD_TO_DEG = PI_DEG / PI;
+
 class Game : public Trackable
 {
 public:
@@ -85,6 +95,9 @@ float genRandomFloat();
 
 //Returns a vector based on the angle.
 Vector2D floatToVector2(const float angle);
+
+//Map rotation to stay inside the circle.
+void mapRotation(float& rotation);
 
 extern Game* gpGame;
 extern PerformanceTracker* gpPerformanceTracker;

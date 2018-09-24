@@ -88,6 +88,7 @@ bool Game::init()
 	
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(mBackgroundBufferID);
+
 	if(pBackGroundBuffer != NULL)
 	{
 		mpSpriteManager->createAndManageSprite(BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight());
@@ -119,7 +120,7 @@ bool Game::init()
 	//setup units
 	Unit* pUnit = mpUnitManager->createPlayerUnit(*pArrowSprite);
 	pUnit->setShowTarget(true);
-	pUnit->setSteering(Steering::ARRIVE, ZERO_VECTOR2D);
+	pUnit->setSteering(Steering::ARRIVE_AND_FACE, ZERO_VECTOR2D);
 
 	return true;
 }
@@ -184,8 +185,6 @@ void Game::processLoop()
 	//write text at mouse position
 	mpGraphicsSystem->writeText(*mpFont, (float)x, (float)y, mousePos.str(), BLACK_COLOR);
 
-	//test of fill region
-	//mpGraphicsSystem->fillRegion(*pDest, Vector2D(300, 300), Vector2D(500, 500), RED_COLOR);
 	mpGraphicsSystem->swap();
 
 	mpMessageManager->processMessagesForThisframe();
@@ -205,7 +204,7 @@ float genRandomBinomial()
 
 float genRandomFloat()
 {
-	float r = (float)rand()/(float)RAND_MAX;
+	float r = (float)rand() / (float)RAND_MAX;
 	return r;
 }
 
@@ -214,3 +213,16 @@ Vector2D floatToVector2(const float angle)
 	return Vector2D(cos(angle), sin(angle));
 }
 
+void mapRotation(float& rotation)
+{
+	rotation = fmod(rotation, TAU);
+
+	if (rotation > PI)
+	{
+		rotation -= TAU;
+	}
+	else if (rotation < -PI)
+	{
+		rotation += TAU;
+	}
+}

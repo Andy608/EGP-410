@@ -5,8 +5,8 @@
 #include "UnitManager.h"
 #include "Unit.h"
 
-const float AlignSteering::msTARGET_RADIUS = 1.0f / 180.0f * 3.14159f;
-const float AlignSteering::msSLOW_RADIUS = 250.0f / 180.0f * 3.14159f;
+const float AlignSteering::msTARGET_RADIUS = 1.0f * DEG_TO_RAD;
+const float AlignSteering::msSLOW_RADIUS = 250.0f * DEG_TO_RAD;
 const float AlignSteering::msTIME_TO_TARGET = 0.1f;
 
 AlignSteering::AlignSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
@@ -51,7 +51,7 @@ Steering* AlignSteering::getSteering()
 		}
 	}
 
-	mapToRange(mTargetAngle);
+	mapRotation(mTargetAngle);
 	rotationVelocity = abs(mTargetAngle);
 
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
@@ -73,7 +73,7 @@ Steering* AlignSteering::getSteering()
 			targetRotationVelocity = maxRotationalVel * rotationVelocity / msSLOW_RADIUS;
 		}
 
-		targetRotationVelocity *= mTargetAngle / rotationVelocity;
+		targetRotationVelocity *= (mTargetAngle / rotationVelocity);
 
 		data.rotAcc = (targetRotationVelocity - data.rotVel);
 		data.rotAcc /= msTIME_TO_TARGET;
@@ -89,18 +89,4 @@ Steering* AlignSteering::getSteering()
 
 	this->mData = data;
 	return this;
-}
-
-void AlignSteering::mapToRange(float& rotation)
-{
-	static const float PI = 3.14159f;
-
-	if (rotation > PI)
-	{
-		rotation -= (2 * PI);
-	}
-	else if (rotation < -PI)
-	{
-		rotation += (2 * PI);
-	}
 }

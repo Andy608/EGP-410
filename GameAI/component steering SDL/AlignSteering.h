@@ -21,9 +21,6 @@ private:
 	static const float msTARGET_RADIUS;
 	static const float msSLOW_RADIUS;
 	static const float msTIME_TO_TARGET;
-
-	//Maps the rotation between -PI and PI.
-	void mapToRange(float& rotation);
 };
 
 #endif
