@@ -4,15 +4,16 @@
 #include "Game.h"
 #include "UnitManager.h"
 
-const float WanderSteering::msWANDER_OFFSET = 100.0f;
+const float WanderSteering::msWANDER_OFFSET = 40.0f;
 const float WanderSteering::msWANDER_RADIUS = 80.0f;
 const float WanderSteering::msWANDER_RATE = TAU;
 
 WanderSteering::WanderSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
 	Steering(Steering::WANDER, ownerID, targetLoc, targetID),
-	mFaceSteering(FaceSteering(ownerID, targetLoc, targetID))
+	mFaceSteering(FaceSteering(ownerID, targetLoc, targetID)),
+	mWanderOrientation(0)
 {
-	
+
 }
 
 Steering* WanderSteering::getSteering()

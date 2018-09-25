@@ -27,8 +27,8 @@ Steering* AlignSteering::getSteering()
 {
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 
-	float maxRotationalAcc = pOwner->getMaxRotAcc();
-	float maxRotationalVel = pOwner->getMaxRotVel();
+	//float maxRotationalAcc = pOwner->getMaxRotAcc();
+	//float maxRotationalVel = pOwner->getMaxRotVel();
 
 	float rotationVelocity;
 	float targetRotationVelocity;
@@ -66,11 +66,11 @@ Steering* AlignSteering::getSteering()
 	{
 		if (rotationVelocity > msSLOW_RADIUS)
 		{
-			targetRotationVelocity = maxRotationalVel;
+			targetRotationVelocity = data.maxRotAcc;
 		}
 		else
 		{
-			targetRotationVelocity = maxRotationalVel * rotationVelocity / msSLOW_RADIUS;
+			targetRotationVelocity = data.maxRotVel * rotationVelocity / msSLOW_RADIUS;
 		}
 
 		targetRotationVelocity *= (mTargetAngle / rotationVelocity);
@@ -80,10 +80,10 @@ Steering* AlignSteering::getSteering()
 
 		float angularAcc = abs(data.rotAcc);
 
-		if (angularAcc > maxRotationalAcc)
+		if (angularAcc > data.maxRotAcc)
 		{
 			data.rotAcc /= angularAcc;
-			data.rotAcc *= maxRotationalAcc;
+			data.rotAcc *= data.maxRotAcc;
 		}
 	}
 

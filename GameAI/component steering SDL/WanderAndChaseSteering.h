@@ -22,9 +22,6 @@ protected:
 
 private:
 	static const float msWANDER_RADIUS;
-
-	float mWanderOrientation;
-	float mTargetOrientation;
 };
 
 #endif

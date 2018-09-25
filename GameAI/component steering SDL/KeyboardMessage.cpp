@@ -17,6 +17,7 @@ void KeyboardMessage::process()
 		{
 			//Add unit at random location
 			Unit* pUnit = gpGame->getUnitManager()->createRandomUnit(*gpGame->getSpriteManager()->getSprite(AI_ICON_SPRITE_ID));
+
 			if (pUnit == NULL)
 			{
 				gpGame->getUnitManager()->deleteRandomUnit();
