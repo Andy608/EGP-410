@@ -48,10 +48,7 @@ Game::~Game()
 }
 
 bool Game::init()
-{
-	//Initialize the random seed.
-	//srand(static_cast<unsigned int>(time(NULL)));
-	
+{	
 	mShouldExit = false;
 
 	//create Timers

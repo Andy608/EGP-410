@@ -27,9 +27,6 @@ Steering* AlignSteering::getSteering()
 {
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 
-	//float maxRotationalAcc = pOwner->getMaxRotAcc();
-	//float maxRotationalVel = pOwner->getMaxRotVel();
-
 	float rotationVelocity;
 	float targetRotationVelocity;
 
