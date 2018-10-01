@@ -34,7 +34,8 @@ public:
 	void drawAll() const;
 	void updateAll(float elapsedTime);
 
-	Unit* getPlayerUnit() const { return getUnit(PLAYER_UNIT_ID); };
+	inline Unit* getPlayerUnit() const { return getUnit(PLAYER_UNIT_ID); };
+	inline const std::map<UnitID, Unit*>& getAllUnits() const { return mUnitMap; };
 
 private:
 	static UnitID msNextUnitID;

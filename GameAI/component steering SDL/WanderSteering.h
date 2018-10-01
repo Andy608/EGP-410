@@ -1,8 +1,6 @@
 #ifndef WANDER_STEERING_H_
 #define WANDER_STEERING_H_
 
-#include <Trackable.h>
-
 #include "Steering.h"
 #include "FaceSteering.h"
 

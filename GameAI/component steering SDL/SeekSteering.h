@@ -1,8 +1,6 @@
 #ifndef SEEK_STEERING_H_
 #define SEEK_STEERING_H_
 
-#include <Trackable.h>
-
 #include "Steering.h"
 
 class SeekSteering : public Steering

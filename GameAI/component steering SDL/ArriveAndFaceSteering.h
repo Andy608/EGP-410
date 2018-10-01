@@ -1,8 +1,6 @@
 #ifndef ARRIVE_AND_FACE_STEERING_H_
 #define ARRIVE_AND_FACE_STEERING_H_
 
-#include <Trackable.h>
-
 #include "Steering.h"
 #include "FaceSteering.h"
 #include "ArriveSteering.h"

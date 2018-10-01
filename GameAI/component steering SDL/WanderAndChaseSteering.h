@@ -1,8 +1,6 @@
 #ifndef WANDER_AND_CHASE_STEERING_H_
 #define WANDER_AND_CHASE_STEERING_H_
 
-#include <Trackable.h>
-
 #include "Steering.h"
 #include "WanderSteering.h"
 #include "SeekSteering.h"

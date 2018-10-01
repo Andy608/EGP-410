@@ -1,8 +1,6 @@
 #ifndef ALIGN_STEERING_H_
 #define ALIGN_STEERING_H_
 
-#include <Trackable.h>
-
 #include "Steering.h"
 
 class AlignSteering : public Steering

@@ -1,8 +1,6 @@
 #ifndef FACE_STEERING_H_
 #define FACE_STEERING_H_
 
-#include <Trackable.h>
-
 #include "Steering.h"
 #include "AlignSteering.h"
 

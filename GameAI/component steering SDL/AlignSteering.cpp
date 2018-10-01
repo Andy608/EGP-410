@@ -47,9 +47,15 @@ Steering* AlignSteering::getSteering()
 			mTargetAngle = pTarget->getFacing() - pOwner->getFacing();
 		}
 	}
+	else
+	{
+		mTargetAngle -= pOwner->getFacing();
+	}
 
 	mapRotation(mTargetAngle);
 	rotationVelocity = abs(mTargetAngle);
+
+	std::cout << "Target Angle: " << std::to_string(mTargetAngle) << std::endl;
 
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 

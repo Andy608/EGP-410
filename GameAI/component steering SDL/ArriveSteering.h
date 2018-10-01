@@ -1,8 +1,6 @@
 #ifndef ARRIVE_STEERING_H_
 #define ARRIVE_STEERING_H_
 
-#include <Trackable.h>
-
 #include "Steering.h"
 
 class ArriveSteering : public Steering
