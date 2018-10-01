@@ -16,6 +16,7 @@ public:
 	enum SteeringType
 	{
 		INVALID_TYPE = -1,
+
 		SEEK,
 		FLEE,
 		ARRIVE,
@@ -27,7 +28,9 @@ public:
 
 		SEPARATION,
 		COHESION,
-		ALIGNMENT
+		GROUP_ALIGN,
+
+		FLOCK
 	};
 
 	//constructors and destructors

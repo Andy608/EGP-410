@@ -8,7 +8,10 @@
 
 
 SeekSteering::SeekSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID, bool shouldFlee) : 
-	Steering(getSteeringType(shouldFlee), ownerID, targetLoc, targetID) { }
+	Steering(getSteeringType(shouldFlee), ownerID, targetLoc, targetID) 
+{
+
+}
 
 Steering* SeekSteering::getSteering()
 {

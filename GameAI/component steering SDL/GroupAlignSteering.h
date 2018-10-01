@@ -1,13 +1,13 @@
-#ifndef ALIGNMENT_STEERING_H_
-#define ALIGNMENT_STEERING_H_
+#ifndef GROUP_ALIGN_STEERING_H_
+#define GROUP_ALIGN_STEERING_H_
 
 #include "Steering.h"
 #include "AlignSteering.h"
 
-class AlignmentSteering : public Steering
+class GroupAlignSteering : public Steering
 {
 public:
-	AlignmentSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID = INVALID_UNIT_ID);
+	GroupAlignSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID = INVALID_UNIT_ID);
 
 	virtual Steering* getSteering() override;
 

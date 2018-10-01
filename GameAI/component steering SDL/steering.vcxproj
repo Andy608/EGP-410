@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AlignmentSteering.h" />
+    <ClInclude Include="GroupAlignSteering.h" />
     <ClInclude Include="AlignSteering.h" />
     <ClInclude Include="ArriveAndFaceSteering.h" />
     <ClInclude Include="ArriveSteering.h" />
@@ -21,6 +21,7 @@
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="FaceSteering.h" />
+    <ClInclude Include="FlockSteering.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMessage.h" />
@@ -47,7 +48,8 @@
     <ClInclude Include="RequestWindowCloseMessage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AlignmentSteering.cpp" />
+    <ClCompile Include="FlockSteering.cpp" />
+    <ClCompile Include="GroupAlignSteering.cpp" />
     <ClCompile Include="AlignSteering.cpp" />
     <ClCompile Include="ArriveAndFaceSteering.cpp" />
     <ClCompile Include="ArriveSteering.cpp" />

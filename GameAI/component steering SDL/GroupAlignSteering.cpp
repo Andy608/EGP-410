@@ -1,17 +1,17 @@
-#include "AlignmentSteering.h"
+#include "GroupAlignSteering.h"
 #include "Game.h"
 #include "UnitManager.h"
 
-const float AlignmentSteering::msINFLUENCE_RADIUS = 10000.0f;
+const float GroupAlignSteering::msINFLUENCE_RADIUS = 400.0f;
 
-AlignmentSteering::AlignmentSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
-	mAlignSteering(AlignSteering(ownerID, targetLoc, targetID)),
-	Steering(Steering::ALIGNMENT, ownerID, targetLoc, targetID)
+GroupAlignSteering::GroupAlignSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
+	Steering(Steering::GROUP_ALIGN, ownerID, targetLoc, targetID),
+	mAlignSteering(AlignSteering(ownerID, targetLoc, targetID))
 {
 
 }
 
-Steering* AlignmentSteering::getSteering()
+Steering* GroupAlignSteering::getSteering()
 {
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();

@@ -55,8 +55,6 @@ Steering* AlignSteering::getSteering()
 	mapRotation(mTargetAngle);
 	rotationVelocity = abs(mTargetAngle);
 
-	std::cout << "Target Angle: " << std::to_string(mTargetAngle) << std::endl;
-
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 
 	if (rotationVelocity < msTARGET_RADIUS)

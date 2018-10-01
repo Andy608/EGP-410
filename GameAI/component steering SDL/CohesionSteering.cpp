@@ -6,8 +6,8 @@
 const float CohesionSteering::msINFLUENCE_RADIUS = 200.0f;
 
 CohesionSteering::CohesionSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
-	mArriveSteering(ArriveSteering(ownerID, targetLoc, targetID)),
-	Steering(Steering::COHESION, ownerID, targetLoc, targetID)
+	Steering(Steering::COHESION, ownerID, targetLoc, targetID),
+	mArriveSteering(ArriveSteering(ownerID, targetLoc, targetID))
 {
 
 }

@@ -7,8 +7,8 @@
 #include "Game.h"
 #include "UnitManager.h"
 
-const float SeparationSteering::msINFLUENCE_RADIUS = 100.0f;
-const float SeparationSteering::msDECAY_COEFFICIENT = 5.0f;
+const float SeparationSteering::msINFLUENCE_RADIUS = 300.0f;
+const float SeparationSteering::msDECAY_COEFFICIENT = 100.0f;
 
 SeparationSteering::SeparationSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
 	Steering(Steering::SEPARATION, ownerID, targetLoc, targetID)
