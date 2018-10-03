@@ -1,8 +1,9 @@
 #include "GroupAlignSteering.h"
 #include "Game.h"
 #include "UnitManager.h"
+#include "SteeringDataModifier.h"
 
-const float GroupAlignSteering::msINFLUENCE_RADIUS = 400.0f;
+const float GroupAlignSteering::msINFLUENCE_RADIUS = 100.0f;
 
 GroupAlignSteering::GroupAlignSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
 	Steering(Steering::GROUP_ALIGN, ownerID, targetLoc, targetID),
@@ -35,7 +36,8 @@ Steering* GroupAlignSteering::getSteering()
 			direction = currentUnit->getPositionComponent()->getPosition() - pOwner->getPositionComponent()->getPosition();
 			distanceSquared = direction.getLengthSquared();
 
-			if (distanceSquared < msINFLUENCE_RADIUS * msINFLUENCE_RADIUS)
+			float radius = gpGame->getSteeringDataModifier()->getData(EnumSteeringDataType::ALIGNMENT_RADIUS);
+			if (distanceSquared < radius * radius)
 			{
 				//Arrive at the averaged location
 				averageRotation += currentUnit->getFacing();
@@ -52,6 +54,11 @@ Steering* GroupAlignSteering::getSteering()
 		mAlignSteering.getSteering();
 
 		data.rotAcc = mAlignSteering.getData().rotAcc;
+	}
+	else
+	{
+		data.rotAcc = 0;
+		data.rotVel = 0;
 	}
 
 	this->mData = data;

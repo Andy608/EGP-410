@@ -19,6 +19,7 @@ class ComponentManager;
 class UnitManager;
 class Vector2D;
 class InputSystem;
+class SteeringDataModifier;
 
 const IDType BACKGROUND_SPRITE_ID = 0;
 const IDType PLAYER_ICON_SPRITE_ID = 1;
@@ -53,6 +54,7 @@ public:
 	inline ComponentManager* getComponentManager() { return mpComponentManager; };
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
 	inline InputSystem* getInputSystem() { return mpInputSystem; };
+	inline SteeringDataModifier* getSteeringDataModifier() { return mpSteeringDataModifier; };
 	inline Timer* getMasterTimer() const { return mpMasterTimer; };
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 
@@ -64,6 +66,7 @@ private:
 	ComponentManager* mpComponentManager;
 	UnitManager* mpUnitManager;
 	InputSystem* mpInputSystem;
+	SteeringDataModifier* mpSteeringDataModifier;
 	Font* mpFont;
 	Timer* mpLoopTimer;
 	Timer* mpMasterTimer;

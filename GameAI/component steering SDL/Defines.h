@@ -29,4 +29,10 @@ const float TAU_DEG = 360.0f;
 const float DEG_TO_RAD = PI / PI_DEG;
 const float RAD_TO_DEG = PI_DEG / PI;
 
+//GUI Elements
+const static std::string msSELECTION_DECAY_COEF_LABEL = "Selection Decay Coeficient";
+const static std::string msSELECTION_RADIUS_LABEL = "Selection Radius";
+const static std::string msCOHESION_RADIUS_LABEL = "Cohesion Radius";
+const static std::string msALIGNMENT_RADIUS_LABEL = "Alignment Radius";
+
 #endif

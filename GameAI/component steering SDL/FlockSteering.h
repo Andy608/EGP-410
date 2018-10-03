@@ -5,6 +5,7 @@
 #include "SeparationSteering.h"
 #include "CohesionSteering.h"
 #include "GroupAlignSteering.h"
+#include "WanderSteering.h"
 
 struct BehaviorAndWeight : public Trackable
 {
@@ -17,6 +18,11 @@ struct BehaviorAndWeight : public Trackable
 class FlockSteering : public Steering
 {
 public:
+	static const float msSEPARATION_STRENGTH;
+	static const float msCOHESION_STRENGTH;
+	static const float msALIGNMENT_STRENGTH;
+	static const float msWANDER_STRENGTH;
+
 	FlockSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID = INVALID_UNIT_ID);
 	~FlockSteering();
 
@@ -29,6 +35,7 @@ protected:
 	SeparationSteering mSeparationSteering;
 	CohesionSteering mCohesionSteering;
 	GroupAlignSteering mGroupAlignSteering;
+	WanderSteering mWanderSteering;
 };
 
 #endif

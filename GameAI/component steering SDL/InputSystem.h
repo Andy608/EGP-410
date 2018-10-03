@@ -17,7 +17,22 @@ enum EnumKeyInput
 {
 	ESCAPE_KEY = SDLK_ESCAPE,
 	ENTER_KEY = SDLK_RETURN,
-	D_KEY = SDLK_d,
+	
+	A_KEY = SDLK_a,			//Spawns 10 random units
+	D_KEY = SDLK_d,			//Deletes random unit
+
+	UP_KEY = SDLK_UP,		//Values go down
+	DOWN_KEY = SDLK_DOWN,	//Values go up
+	
+	ONE_KEY = SDLK_1,		//Selection strength
+	TWO_KEY = SDLK_2,		//Cohesion strength
+	THREE_KEY = SDLK_3,		//Alignment strength
+	FOUR_KEY = SDLK_4,		//Wander strength
+	FIVE_KEY = SDLK_5,		//Selection coef
+	SIX_KEY = SDLK_6,		//Selection radius
+	SEVEN_KEY = SDLK_7,		//Cohesion radius
+	EIGHT_KEY = SDLK_8,		//Alignment radius
+	NINE_KEY = SDLK_9		//Wander radius
 };
 
 class InputSystem : public Trackable

@@ -3,6 +3,7 @@
 #include "WanderSteering.h"
 #include "Game.h"
 #include "UnitManager.h"
+#include "SteeringDataModifier.h"
 
 const float WanderSteering::msWANDER_OFFSET = 40.0f;
 const float WanderSteering::msWANDER_RADIUS = 80.0f;
@@ -28,7 +29,7 @@ Steering* WanderSteering::getSteering()
 	Vector2D ownerDirection = floatToVector2(pOwner->getFacing());
 
 	mTargetLoc = pOwner->getPositionComponent()->getPosition() + ownerDirection * msWANDER_OFFSET;
-	mTargetLoc += floatToVector2(mTargetOrientation) * msWANDER_RADIUS;
+	mTargetLoc += floatToVector2(mTargetOrientation) * gpGame->getSteeringDataModifier()->getData(EnumSteeringDataType::WANDER_RADIUS);
 	
 	mFaceSteering.setTargetLoc(mTargetLoc);
 

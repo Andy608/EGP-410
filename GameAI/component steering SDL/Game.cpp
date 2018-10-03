@@ -18,6 +18,7 @@
 #include "ComponentManager.h"
 #include "UnitManager.h"
 #include "InputSystem.h"
+#include "SteeringDataModifier.h"
 
 Game* gpGame = NULL;
 
@@ -37,7 +38,8 @@ Game::Game() :
 	mpMessageManager(NULL),
 	mpComponentManager(NULL),
 	mpUnitManager(NULL),
-	mpInputSystem(NULL)
+	mpInputSystem(NULL),
+	mpSteeringDataModifier(NULL)
 {
 
 }
@@ -54,6 +56,9 @@ bool Game::init()
 	//create Timers
 	mpLoopTimer = new Timer;
 	mpMasterTimer = new Timer;
+
+	mpSteeringDataModifier = new SteeringDataModifier("steering_data.txt");
+	mpSteeringDataModifier->loadData();
 
 	//create and init GraphicsSystem
 	mpGraphicsSystem = new GraphicsSystem();
@@ -77,7 +82,7 @@ bool Game::init()
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID,"wallpaper.bmp");
 	mpGraphicsBufferManager->loadBuffer(mPlayerIconBufferID,"arrow.png");
-	mpGraphicsBufferManager->loadBuffer(mEnemyIconBufferID,"enemy-arrow.png");
+	mpGraphicsBufferManager->loadBuffer(mEnemyIconBufferID,"enemy_arrow.png");
 	mpGraphicsBufferManager->loadBuffer(mTargetBufferID,"target.png");
 
 	//load Font
@@ -114,16 +119,21 @@ bool Game::init()
 		mpSpriteManager->createAndManageSprite(TARGET_SPRITE_ID, pTargetBuffer, 0, 0, (float)pTargetBuffer->getWidth(), (float)pTargetBuffer->getHeight());
 	}
 
-	//setup units
-	Unit* pUnit = mpUnitManager->createPlayerUnit(*pArrowSprite);
+	//setup PLAYER
+	/*Unit* pUnit = mpUnitManager->createPlayerUnit(*pArrowSprite);
 	pUnit->setShowTarget(true);
-	pUnit->setSteering(Steering::ARRIVE_AND_FACE, ZERO_VECTOR2D);
+	pUnit->setSteering(Steering::ARRIVE_AND_FACE, ZERO_VECTOR2D);*/
 
 	return true;
 }
 
 void Game::cleanup()
 {
+	if (mpSteeringDataModifier)
+	{
+		mpSteeringDataModifier->saveData();
+	}
+
 	//delete the timers
 	delete mpLoopTimer;
 	mpLoopTimer = NULL;
@@ -139,14 +149,22 @@ void Game::cleanup()
 
 	delete mpGraphicsBufferManager;
 	mpGraphicsBufferManager = NULL;
+
 	delete mpSpriteManager;
 	mpSpriteManager = NULL;
+	
 	delete mpMessageManager;
 	mpMessageManager = NULL;
+	
 	delete mpUnitManager;
 	mpUnitManager = NULL;
+	
 	delete mpInputSystem;
 	mpInputSystem = NULL;
+	
+	delete mpSteeringDataModifier;
+	mpSteeringDataModifier = NULL;
+	
 	delete mpComponentManager;
 	mpComponentManager = NULL;
 }

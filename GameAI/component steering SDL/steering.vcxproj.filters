@@ -103,6 +103,12 @@
     <ClCompile Include="FlockSteering.cpp">
       <Filter>Source Files\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsFile.cpp">
+      <Filter>Source Files\Util\File</Filter>
+    </ClCompile>
+    <ClCompile Include="SteeringDataModifier.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsBuffer.h">
@@ -210,6 +216,12 @@
     <ClInclude Include="GroupAlignSteering.h">
       <Filter>Header Files\Steering</Filter>
     </ClInclude>
+    <ClInclude Include="SettingsFile.h">
+      <Filter>Header Files\Util\File</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringDataModifier.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -259,6 +271,12 @@
     </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{78b420ae-5c2b-4ac7-8b03-6eef5f3d2520}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\File">
+      <UniqueIdentifier>{70997b2e-014a-44cc-9a88-d46cfabba8ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\File">
+      <UniqueIdentifier>{eec702ad-27cb-4530-a327-105f417d266c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

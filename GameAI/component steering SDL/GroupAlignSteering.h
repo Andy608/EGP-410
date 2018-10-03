@@ -7,16 +7,15 @@
 class GroupAlignSteering : public Steering
 {
 public:
+	//Threshold
+	const static float msINFLUENCE_RADIUS;
+
 	GroupAlignSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID = INVALID_UNIT_ID);
 
 	virtual Steering* getSteering() override;
 
 protected:
 	AlignSteering mAlignSteering;
-
-private:
-	//Threshold
-	const static float msINFLUENCE_RADIUS;
 };
 
 #endif

@@ -62,6 +62,20 @@ Unit* UnitManager::createPlayerUnit(const Sprite& sprite, bool shouldWrap /*= tr
 	return createUnit(sprite, shouldWrap, posData, physicsData, PLAYER_UNIT_ID);
 }
 
+void UnitManager::createRandomUnits(const Sprite& sprite, const int& quantity)
+{
+	int i = 0;
+	for (; i < quantity; ++i)
+	{
+		Unit* createdUnit = createRandomUnit(sprite);
+
+		if (createdUnit == NULL)
+		{
+			gpGame->getUnitManager()->deleteRandomUnit();
+		}
+	}
+}
+
 Unit* UnitManager::createRandomUnit(const Sprite& sprite)
 {
 	int posX = rand() % gpGame->getGraphicsSystem()->getWidth();

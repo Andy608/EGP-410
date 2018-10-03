@@ -6,11 +6,6 @@
 class SeparationSteering : public Steering
 {
 public:
-	SeparationSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID = INVALID_UNIT_ID);
-
-	virtual Steering* getSteering() override;
-
-private:
 	//Threshold
 	const static float msINFLUENCE_RADIUS;
 
@@ -20,6 +15,10 @@ private:
 	*  decays with distance.
 	*/
 	const static float msDECAY_COEFFICIENT;
+
+	SeparationSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID = INVALID_UNIT_ID);
+
+	virtual Steering* getSteering() override;
 };
 
 

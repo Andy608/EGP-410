@@ -7,6 +7,8 @@
 class WanderSteering : public Steering
 {
 public:
+	static const float msWANDER_RADIUS;
+
 	WanderSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID = INVALID_UNIT_ID);
 
 	virtual Steering* getSteering() override;
@@ -16,7 +18,6 @@ protected:
 
 private:
 	static const float msWANDER_OFFSET;
-	static const float msWANDER_RADIUS;
 	static const float msWANDER_RATE;
 
 	float mWanderOrientation;

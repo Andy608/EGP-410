@@ -2,8 +2,9 @@
 
 #include "Game.h"
 #include "UnitManager.h"
+#include "SteeringDataModifier.h"
 
-const float CohesionSteering::msINFLUENCE_RADIUS = 200.0f;
+const float CohesionSteering::msINFLUENCE_RADIUS = 100.0f;
 
 CohesionSteering::CohesionSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID) :
 	Steering(Steering::COHESION, ownerID, targetLoc, targetID),
@@ -24,6 +25,8 @@ Steering* CohesionSteering::getSteering()
 	Vector2D averagePosition;
 	float unitCount = 0;
 
+	data.rotAcc = 0.0f;
+
 	const std::map<UnitID, Unit*>& UNITS = gpGame->getUnitManager()->getAllUnits();
 	auto unitIter = UNITS.begin();
 
@@ -36,7 +39,8 @@ Steering* CohesionSteering::getSteering()
 			direction = currentUnit->getPositionComponent()->getPosition() - pOwner->getPositionComponent()->getPosition();
 			distanceSquared = direction.getLengthSquared();
 
-			if (distanceSquared < msINFLUENCE_RADIUS * msINFLUENCE_RADIUS)
+			float radius = gpGame->getSteeringDataModifier()->getData(EnumSteeringDataType::COHESION_RADIUS);
+			if (distanceSquared < radius * radius)
 			{
 				//Arrive at the averaged location
 				averagePosition += currentUnit->getPositionComponent()->getPosition();
@@ -52,6 +56,11 @@ Steering* CohesionSteering::getSteering()
 		mArriveSteering.getSteering();
 
 		data.acc = mArriveSteering.getData().acc;
+	}
+	else
+	{
+		data.acc = 0;
+		data.vel = 0;
 	}
 
 	this->mData = data;
