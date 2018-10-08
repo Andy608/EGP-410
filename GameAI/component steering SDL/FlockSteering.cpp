@@ -43,8 +43,6 @@ Steering* FlockSteering::getSteering()
 
 	data.acc = 0;
 	data.rotAcc = 0;
-	//data.vel = 0;
-	//data.rotVel = 0;
 
 	int i = 0;
 
@@ -58,18 +56,6 @@ Steering* FlockSteering::getSteering()
 
 	data.acc.normalize();
 	data.acc *= maxAcceleration;
-
-	/*if (data.rotAcc < maxRotAcceleration)
-	{
-		data.rotAcc = maxAcceleration;
-	}*/
-
-	//std::cout << "Acc: " << std::to_string(data.acc.getLength()) << std::endl;
-
-	/*if (data.acc.getLength() != 0.0f && data.rotAcc < maxRotAcceleration)
-	{
-		data.rotAcc = maxRotAcceleration;
-	}*/
 
 	this->mData = data;
 	return this;

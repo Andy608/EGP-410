@@ -32,7 +32,6 @@ Steering* FaceSteering::getSteering()
 	}
 	else
 	{
-		//atan2(direction.getY(), direction.getX()) - pOwner->getFacing()
 		mAlignSteering.setTargetAngle(atan2(direction.getY(), direction.getX()));
 		return mAlignSteering.getSteering();
 	}
