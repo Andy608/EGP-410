@@ -45,10 +45,9 @@ int main(int argc, char **argv)
 	delete gpGame;
 	delete gpPerformanceTracker;
 
-	gMemoryTracker.reportAllocations( std::cout );
+	MemoryTracker::getInstance()->reportAllocations( std::cout );
 
-	system("pause");
-
+	std::cin.get();
 	return 0;
 }
 

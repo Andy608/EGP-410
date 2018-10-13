@@ -1,12 +1,13 @@
+#include <PerformanceTracker.h>
+#include <list>
+#include <vector>
+#include <algorithm>
+
 #include "DepthFirstPathfinder.h"
 #include "Path.h"
 #include "Connection.h"
 #include "GridGraph.h"
 #include "Game.h"
-#include <PerformanceTracker.h>
-#include <list>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 
