@@ -1,10 +1,9 @@
 #pragma once
 
 /* Game - base class for actual application class
-
-	Dean Lawson
-	Champlain College
-	2011
+Dean Lawson
+Champlain College
+2011
 */
 #include <Trackable.h>
 #include <Timer.h>
@@ -24,7 +23,7 @@ extern Game* gpGame;
 
 const IDType BACKGROUND_SPRITE_ID = 0;
 
-class Game:public Trackable
+class Game :public Trackable
 {
 public:
 	Game();
@@ -47,7 +46,7 @@ public:
 	inline void markForExit() { mShouldExit = true; };
 
 protected:
-	GraphicsSystem* mpGraphicsSystem;
+	GraphicsSystem * mpGraphicsSystem;
 	GraphicsBufferManager* mpGraphicsBufferManager;
 	SpriteManager* mpSpriteManager;
 	Timer* mpLoopTimer;
@@ -64,6 +63,6 @@ protected:
 
 float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge
 float genRandomFloat();//range 0:1 from "Artificial Intelligence for Games", Millington and Funge
-float mapRotationToRange( float rotation, float low, float high );
+float mapRotationToRange(float rotation, float low, float high);
 
-const double PI = std::atan(1.0)*4;//could proved useful!
+const double PI = std::atan(1.0) * 4;//could proved useful!

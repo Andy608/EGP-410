@@ -22,11 +22,23 @@
     <Filter Include="Common\Source Files">
       <UniqueIdentifier>{b686f4d5-6b3d-437e-874e-eb326b8aafd8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\pathfinding">
+    <Filter Include="Header Files\Messaging">
+      <UniqueIdentifier>{cb643239-0dfc-4be8-8b56-ed041f3c48b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pathfinding">
       <UniqueIdentifier>{370cc426-3bb2-4fa1-a418-e8a82b3c7bbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\pathfinding">
+    <Filter Include="Source Files\Pathfinding">
       <UniqueIdentifier>{474fbefa-c012-4187-954c-fdb12b4f06d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Messaging">
+      <UniqueIdentifier>{e2b3b59a-2ed9-4d86-a112-40ca58d3a9ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{29cf08a4-c9eb-4bf0-986b-98a1557f1a22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{663de51d-07c2-4809-bf0f-a73a2ed00247}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -45,44 +57,35 @@
     <ClInclude Include="..\common\Sprite.h">
       <Filter>Common\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameMessageManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Connection.h">
-      <Filter>Header Files\pathfinding</Filter>
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="Graph.h">
-      <Filter>Header Files\pathfinding</Filter>
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="Node.h">
-      <Filter>Header Files\pathfinding</Filter>
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="GridGraph.h">
-      <Filter>Header Files\pathfinding</Filter>
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="Path.h">
-      <Filter>Header Files\pathfinding</Filter>
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="Pathfinder.h">
-      <Filter>Header Files\pathfinding</Filter>
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="DepthFirstPathfinder.h">
-      <Filter>Header Files\pathfinding</Filter>
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="..\common\GridVisualizer.h">
       <Filter>Common\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PathToMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GridPathfinder.h">
-      <Filter>Header Files\pathfinding</Filter>
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="..\common\SpriteManager.h">
       <Filter>Common\Header Files</Filter>
@@ -109,7 +112,28 @@
       <Filter>Common\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DijkstraPathfinder.h">
-      <Filter>Header Files\pathfinding</Filter>
+      <Filter>Header Files\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMessageManager.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="RequestWindowCloseMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="PathToMessage.h">
+      <Filter>Header Files\Messaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -128,12 +152,6 @@
     <ClCompile Include="..\common\Sprite.cpp">
       <Filter>Common\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameMessageManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -141,25 +159,25 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graph.cpp">
-      <Filter>Source Files\pathfinding</Filter>
+      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="Connection.cpp">
-      <Filter>Source Files\pathfinding</Filter>
+      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="Node.cpp">
-      <Filter>Source Files\pathfinding</Filter>
+      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="GridGraph.cpp">
-      <Filter>Source Files\pathfinding</Filter>
+      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="Path.cpp">
-      <Filter>Source Files\pathfinding</Filter>
+      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="Pathfinder.cpp">
-      <Filter>Source Files\pathfinding</Filter>
+      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="DepthFirstPathfinder.cpp">
-      <Filter>Source Files\pathfinding</Filter>
+      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="..\common\GridVisualizer.cpp">
       <Filter>Common\Source Files</Filter>
@@ -168,7 +186,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GridPathfinder.cpp">
-      <Filter>Source Files\pathfinding</Filter>
+      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="..\common\SpriteManager.cpp">
       <Filter>Common\Source Files</Filter>
@@ -192,7 +210,22 @@
       <Filter>Common\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DijkstraPathfinder.cpp">
-      <Filter>Source Files\pathfinding</Filter>
+      <Filter>Source Files\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMessageManager.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@ class GridVisualizer;
 class GraphicsBuffer;
 class PathfindingDebugContent;
 
-class GridPathfinder:public Pathfinder
+class GridPathfinder : public Pathfinder
 {
 public:
 	friend class PathfindingDebugContent;

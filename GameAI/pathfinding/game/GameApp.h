@@ -13,6 +13,7 @@ Champlain College
 class GraphicsBuffer;
 class Sprite;
 class KinematicUnit;
+class InputSystem;
 class GameMessageManager;
 class Grid;
 class GridVisualizer;
@@ -23,7 +24,7 @@ class DebugDisplay;
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
 
-class GameApp: public Game
+class GameApp : public Game
 {
 public:
 	GameApp();
@@ -38,12 +39,15 @@ public:
 	virtual bool endLoop();
 
 	//accessors
+	inline InputSystem* getInputSystem() { return mpInputSystem; };
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
 	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
 	inline Grid* getGrid() { return mpGrid; };
 	inline GridGraph* getGridGraph() { return mpGridGraph; };
+
 private:
+	InputSystem* mpInputSystem;
 	GameMessageManager* mpMessageManager;
 	Grid* mpGrid;
 	GridVisualizer* mpGridVisualizer;
@@ -51,6 +55,5 @@ private:
 	DebugDisplay* mpDebugDisplay;
 
 	GridPathfinder* mpPathfinder;
-
 };
 

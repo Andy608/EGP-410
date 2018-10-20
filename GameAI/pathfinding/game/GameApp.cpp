@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "GameApp.h"
+#include "InputSystem.h"
 #include "GameMessageManager.h"
 #include "PathToMessage.h"
 #include "GraphicsSystem.h"
@@ -26,14 +27,13 @@
 const int GRID_SQUARE_SIZE = 32;
 const std::string gFileName = "pathgrid.txt";
 
-GameApp::GameApp()
-:mpMessageManager(NULL)
-,mpGrid(NULL)
-,mpGridGraph(NULL)
-,mpPathfinder(NULL)
-,mpDebugDisplay(NULL)
-{
-}
+GameApp::GameApp() : 
+	mpInputSystem(NULL),
+	mpMessageManager(NULL),
+	mpGrid(NULL),
+	mpGridGraph(NULL),
+	mpPathfinder(NULL),
+	mpDebugDisplay(NULL) {}
 
 GameApp::~GameApp()
 {
@@ -45,10 +45,10 @@ bool GameApp::init()
 	bool retVal = Game::init();
 	if( retVal == false )
 	{
-
 		return false;
 	}
 
+	mpInputSystem = new InputSystem();
 	mpMessageManager = new GameMessageManager();
 
 	//create and load the Grid, GridBuffer, and GridRenderer
@@ -84,6 +84,9 @@ bool GameApp::init()
 
 void GameApp::cleanup()
 {
+	delete mpInputSystem;
+	mpInputSystem = NULL;
+
 	delete mpMessageManager;
 	mpMessageManager = NULL;
 
@@ -122,36 +125,8 @@ void GameApp::processLoop()
 
 	mpDebugDisplay->draw( pBackBuffer );
 
+	mpInputSystem->update();
 	mpMessageManager->processMessagesForThisframe();
-
-	//get input - should be moved someplace better
-	SDL_PumpEvents();
-	int x, y;
-
-	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT))
-	{
-		static Vector2D lastPos(0.0f, 0.0f);
-		Vector2D pos(x,y);
-		if (lastPos.getX() != pos.getX() || lastPos.getY() != pos.getY())
-		{
-			GameMessage* pMessage = new PathToMessage(lastPos, pos);
-			mpMessageManager->addMessage(pMessage, 0);
-			lastPos = pos;
-		}
-	}
-
-	//get input - should be moved someplace better
-	//all this should be moved to InputManager!!!
-	{
-		//get keyboard state
-		const Uint8 *state = SDL_GetKeyboardState(NULL);
-
-		//if escape key was down then exit the loop
-		if (state[SDL_SCANCODE_ESCAPE])
-		{
-			markForExit();
-		}
-	}
 
 	//should be last thing in processLoop
 	Game::processLoop();

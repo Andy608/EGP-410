@@ -1,4 +1,4 @@
-#include <list>
+#include <cassert>
 
 #include "Game.h"
 #include "GameMessageManager.h"
@@ -6,40 +6,44 @@
 
 using namespace std;
 
-GameMessageManager::GameMessageManager()
+GameMessageManager::GameMessageManager(Uint32 size)
 {
+	mMessages = new CircularQueue<GameMessage*>(size);
 }
 
 GameMessageManager::~GameMessageManager()
 {
-	list<GameMessage*>::iterator iter;
-	for( iter = mMessages.begin(); iter != mMessages.end(); ++iter )
+	GameMessage* pMessage;
+	while (mMessages->popFront(pMessage))
 	{
-		delete (*iter);
+		delete pMessage;
 	}
+
+	delete mMessages;
 }
 
 void GameMessageManager::processMessagesForThisframe()
 {
-	double currentTime = gpGame->getCurrentTime();
+	GameMessage* pMessage;
 
-	list<GameMessage*>::iterator iter = mMessages.begin();
-	while( iter != mMessages.end() )
+	while (mMessages->popFront(pMessage))
 	{
-		if( (*iter)->getScheduledTime() <= currentTime )
+		double currentTime = gpGame->getCurrentTime();
+
+		if (pMessage->getScheduledTime() <= currentTime)
 		{
-			(*iter)->process();
-			delete (*iter);
-			iter = mMessages.erase(iter);
+			pMessage->process();
+			delete pMessage;
 		}
 		else
 		{
-			++iter;
+			//not time to process yet - push to back
+			mMessages->pushBack(pMessage);
 		}
 	}
 }
 
-void GameMessageManager::addMessage( GameMessage* pMessage, int delay )
+void GameMessageManager::addMessage(GameMessage* pMessage, int delay)
 {
 	double currentTime = gpGame->getCurrentTime();
 
@@ -48,5 +52,6 @@ void GameMessageManager::addMessage( GameMessage* pMessage, int delay )
 	pMessage->mScheduledTime = currentTime + delay;
 
 	//put it in the message list
-	mMessages.push_back( pMessage );
+	bool success = mMessages->pushBack(pMessage);
+	assert(success);
 }
