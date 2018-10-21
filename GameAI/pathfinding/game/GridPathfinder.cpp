@@ -10,9 +10,11 @@
 
 using namespace std;
 
-GridPathfinder::GridPathfinder( GridGraph* pGraph )
-:Pathfinder(pGraph)
-,mTimeElapsed(0.0)
+GridPathfinder::GridPathfinder(GridGraph* pGraph, Node* pFrom, Node* pTo) :
+	Pathfinder(pGraph),
+	mTimeElapsed(0.0),
+	mpFrom(pFrom),
+	mpTo(pTo)
 {
 #ifdef VISUALIZE_PATH
 	mpVisualizer = NULL;
@@ -49,25 +51,31 @@ void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
 	//cout << "mpPath:" << mpPath << endl;
 	delete mpVisualizer;
 	mpVisualizer = new GridVisualizer( pGrid );
-	static Color pathColor = Color(255,64,64);
+	static Color startPathColor = Color(255, 117, 2);
+	static Color endPathColor = Color(255, 255, 255);
 	static Color visitedColor = GREEN_COLOR;
 	static Color startColor = Color(1,255,128);
 	static Color stopColor = Color(1,128,255);
 
 	if( mpPath != NULL )
 	{
-		Color currentPathColor = pathColor;
+		Color currentPathColor = startPathColor;
 		unsigned int numNodes = mpPath->getNumNodes();
 
 		/*for( int i=1; i<numNodes-1; i++ )
 		{
 			mpVisualizer->addColor( mpPath->peekNode(i)->getId(), pathColor );
 		}*/
+
 		for (unsigned int i = 1; i < numNodes - 1; i++)
 		{
 			mpVisualizer->addColor(mpPath->peekNode(i)->getId(), currentPathColor);
-			float lerpVal = lerp(i, 0, numNodes);
-			currentPathColor = Color((int)(255 * (1.0f - lerpVal)), currentPathColor.getG(), currentPathColor.getB());
+			float lerpVal = lerp(i, 1, numNodes - 1);
+			currentPathColor =
+				Color(
+				(int)((startPathColor.getR() * (1.0f - lerpVal) + (endPathColor.getR() * lerpVal))),
+				(int)((startPathColor.getG() * (1.0f - lerpVal) + (endPathColor.getG() * lerpVal))),
+				(int)((startPathColor.getB() * (1.0f - lerpVal) + (endPathColor.getB() * lerpVal))));
 		}
 
 

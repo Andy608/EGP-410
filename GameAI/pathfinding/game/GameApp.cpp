@@ -14,6 +14,8 @@
 #include "Connection.h"
 #include "Path.h"
 #include "DepthFirstPathfinder.h"
+#include "DijkstraPathfinder.h"
+#include "AStarPathfinder.h"
 #include "Pathfinder.h"
 #include "GridPathfinder.h"
 #include "GridVisualizer.h"
@@ -59,10 +61,11 @@ bool GameApp::init()
 
 	//create the GridGraph for pathfinding
 	mpGridGraph = new GridGraph(mpGrid);
+
 	//init the nodes and connections
 	mpGridGraph->init();
 
-	mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
+	setPathfinder(EnumPathfinderType::DFS);
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID, "wallpaper.bmp");
@@ -73,10 +76,6 @@ bool GameApp::init()
 	{
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight() );
 	}
-
-	//debug display
-	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
-	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
 
 	mpMasterTimer->start();
 	return true;
@@ -99,11 +98,11 @@ void GameApp::cleanup()
 	delete mpGridGraph;
 	mpGridGraph = NULL;
 
-	delete mpPathfinder;
-	mpPathfinder = NULL;
-
 	delete mpDebugDisplay;
 	mpDebugDisplay = NULL;
+
+	delete mpPathfinder;
+	mpPathfinder = NULL;
 }
 
 void GameApp::beginLoop()
@@ -135,4 +134,39 @@ void GameApp::processLoop()
 bool GameApp::endLoop()
 {
 	return Game::endLoop();
+}
+
+void GameApp::setPathfinder(EnumPathfinderType type)
+{
+	Node* pFrom = NULL;
+	Node* pTo = NULL;
+
+	if (mpPathfinder)
+	{
+		pFrom = mpPathfinder->getFromNode();
+		pTo = mpPathfinder->getToNode();
+		delete mpPathfinder;
+	}
+
+	switch (type)
+	{
+	case EnumPathfinderType::DFS:
+		mpPathfinder = new DepthFirstPathfinder(mpGridGraph, pFrom, pTo);
+		break;
+	case EnumPathfinderType::DIJKSTRA:
+		mpPathfinder = new DijkstraPathfinder(mpGridGraph, pFrom, pTo);
+		break;
+	case EnumPathfinderType::A_STAR:
+		mpPathfinder = new AStarPathfinder(mpGridGraph, pFrom, pTo);
+		break;
+	}
+
+	if (mpDebugDisplay)
+	{
+		delete mpDebugDisplay;
+	}
+
+	//debug display
+	PathfindingDebugContent* pContent = new PathfindingDebugContent(mpPathfinder);
+	mpDebugDisplay = new DebugDisplay(Vector2D(0, 12), pContent);
 }

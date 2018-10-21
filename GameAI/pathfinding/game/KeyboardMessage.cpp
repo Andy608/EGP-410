@@ -22,17 +22,17 @@ void KeyboardMessage::process()
 				//A* pathfinding
 				else if (mInputCode == EnumKeyInput::A_KEY)
 				{
-
+					pGame->setPathfinder(EnumPathfinderType::A_STAR);
 				}
 				//Dijkstra pathfinding
 				else if (mInputCode == EnumKeyInput::D_KEY)
 				{
-
+					pGame->setPathfinder(EnumPathfinderType::DIJKSTRA);
 				}
 				//DFS pathfinding
 				else if (mInputCode == EnumKeyInput::F_KEY)
 				{
-
+					pGame->setPathfinder(EnumPathfinderType::DFS);
 				}
 			}
 		}

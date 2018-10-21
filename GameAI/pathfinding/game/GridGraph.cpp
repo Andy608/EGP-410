@@ -4,6 +4,7 @@
 #include "Grid.h"
 #include "Game.h"
 #include <vector>
+#include <Vector2D.h>
 
 GridGraph::GridGraph( Grid* pGrid )
 :Graph()
@@ -34,7 +35,7 @@ void GridGraph::init()
 		}
 
 		//go through all elements of the grid - get adjacencies and create connections for each
-		for( int i=0; i<numGridIndices; i++ )
+		for( int i = 0; i < numGridIndices; i++ )
 		{
 			//get the Node for this location
 			Node* pFromNode = mNodes[i];
@@ -53,7 +54,15 @@ void GridGraph::init()
 				{
 					Node* pToNode = mNodes[ adjacencies[adjIndex] ];//find to node
 
-					Connection* pConnection = new Connection( pFromNode, pToNode, 1.0f );//create a connection
+					//EXTRA CREDIT START
+
+					//Calculate the distance/weight between the grid pixels :)
+					Vector2D fromGridPos = mpGrid->getULCornerOfSquare(i);
+					Vector2D toGridPos = mpGrid->getULCornerOfSquare(adjacencies[adjIndex]);
+					Vector2D dist = toGridPos - fromGridPos;
+
+					Connection* pConnection = new Connection( pFromNode, pToNode, dist.getLengthSquared() );//create a connection
+					//EXTRA CREDIT END
 
 					//add connection to connection vectors
 					mConnections.push_back( pConnection );

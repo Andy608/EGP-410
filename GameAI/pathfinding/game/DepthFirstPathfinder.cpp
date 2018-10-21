@@ -9,15 +9,17 @@
 #include "GridGraph.h"
 #include "Game.h"
 
-using namespace std;
-
-DepthFirstPathfinder::DepthFirstPathfinder( Graph* pGraph )
-:GridPathfinder(dynamic_cast<GridGraph*>(pGraph) )
+DepthFirstPathfinder::DepthFirstPathfinder(Graph* pGraph, Node* pFrom, Node* pTo)
+:GridPathfinder(dynamic_cast<GridGraph*>(pGraph), pFrom, pTo)
 {
 #ifdef VISUALIZE_PATH
 	mpPath = NULL;
-#endif
 
+	if (mpFrom && mpTo)
+	{
+		findPath(mpFrom, mpTo);
+	}
+#endif
 }
 
 DepthFirstPathfinder::~DepthFirstPathfinder()
@@ -31,8 +33,11 @@ Path* DepthFirstPathfinder::findPath( Node* pFrom, Node* pTo )
 {
 	gpPerformanceTracker->clearTracker("path");
 	gpPerformanceTracker->startTracking("path");
+	
+	setNodes(pFrom, pTo);
+
 	//allocate nodes to visit list and place starting node in it
-	list<Node*> nodesToVisit;
+	std::list<Node*> nodesToVisit;
 	nodesToVisit.push_front( pFrom );
 
 #ifdef VISUALIZE_PATH
@@ -57,7 +62,7 @@ Path* DepthFirstPathfinder::findPath( Node* pFrom, Node* pTo )
 		pPath->addNode( pCurrentNode );
 
 		//get the Connections for the current node
-		vector<Connection*> connections = mpGraph->getConnections( pCurrentNode->getId() );
+		std::vector<Connection*> connections = mpGraph->getConnections( pCurrentNode->getId() );
 
 		//add all toNodes in the connections to the "toVisit" list, if they are not already in the list
 		for( unsigned int i=0; i<connections.size(); i++ )
@@ -77,7 +82,6 @@ Path* DepthFirstPathfinder::findPath( Node* pFrom, Node* pTo )
 #ifdef VISUALIZE_PATH
 				mVisitedNodes.push_back( pTempToNode );
 #endif
-
 			}
 		}
 	}

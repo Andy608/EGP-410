@@ -21,8 +21,18 @@ class GridGraph;
 class GridPathfinder;
 class DebugDisplay;
 
+class AStarPathfinder;
+class DepthFirstPathfinder;
+class DijkstraPathfinder;
+
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
+enum EnumPathfinderType
+{
+	DFS,
+	DIJKSTRA,
+	A_STAR
+};
 
 class GameApp : public Game
 {
@@ -37,6 +47,8 @@ public:
 	virtual void beginLoop();
 	virtual void processLoop();
 	virtual bool endLoop();
+
+	void setPathfinder(EnumPathfinderType type);
 
 	//accessors
 	inline InputSystem* getInputSystem() { return mpInputSystem; };

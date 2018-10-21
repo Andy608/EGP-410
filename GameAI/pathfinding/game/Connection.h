@@ -1,12 +1,13 @@
-#pragma once
+#ifndef CONNECTION_H_
+#define CONNECTION_H_
 
 #include <Trackable.h>
 class Node;
 
-class Connection:public Trackable
+class Connection : public Trackable
 {
 public:
-	Connection( Node* pFrom, Node* pTo, float cost );
+	Connection(Node* pFrom, Node* pTo, float cost);
 	~Connection();
 
 	inline Node* getFromNode() const { return mpFrom; };
@@ -18,3 +19,5 @@ private:
 	Node* mpTo;
 	float mCost;
 };
+
+#endif

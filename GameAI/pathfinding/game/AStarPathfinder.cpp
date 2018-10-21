@@ -3,14 +3,15 @@
 #include <vector>
 #include <algorithm>
 
-#include "DijkstraPathfinder.h"
+#include "AStarPathfinder.h"
 #include "Path.h"
 #include "GridGraph.h"
 #include "Game.h"
 
+#include "Heuristic.h"
 #include "PathfindingList.h"
 
-DijkstraPathfinder::DijkstraPathfinder(Graph* pGraph, Node* pFrom, Node* pTo) :
+AStarPathfinder::AStarPathfinder(Graph* pGraph, Node* pFrom, Node* pTo) :
 	GridPathfinder(dynamic_cast<GridGraph*>(pGraph), pFrom, pTo)
 {
 #ifdef VISUALIZE_PATH
@@ -23,21 +24,22 @@ DijkstraPathfinder::DijkstraPathfinder(Graph* pGraph, Node* pFrom, Node* pTo) :
 #endif
 }
 
-DijkstraPathfinder::~DijkstraPathfinder()
+AStarPathfinder::~AStarPathfinder()
 {
 #ifdef VISUALIZE_PATH
 	delete mpPath;
 #endif
 }
 
-Path* DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
+Path* AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 {
 	gpPerformanceTracker->clearTracker("path");
 	gpPerformanceTracker->startTracking("path");
 
 	setNodes(pFrom, pTo);
 
-	NodeRecord startRecord = NodeRecord(pFrom, nullptr, 0.0f);
+	Heuristic heuristic = Heuristic(pTo);
+	NodeRecord startRecord = NodeRecord(pFrom, nullptr, 0.0f, heuristic.estimateCost(pFrom));
 
 	PathfindingList openList;
 	openList += startRecord;
@@ -63,18 +65,28 @@ Path* DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 		{
 			break;
 		}
-		
+
 		std::vector<Connection*> connections = mpGraph->getConnections(current.node->getId());
-		
+
 		for (Connection* currentConnection : connections)
 		{
 			Node* endNode = currentConnection->getToNode();
 			float endNodeCost = current.costSoFar + currentConnection->getCost();
+			float endNodeHeuristic;
 			NodeRecord endNodeRecord;
 
 			if (closedList.contains(endNode))
 			{
-				continue;
+				closedList.find(endNode, endNodeRecord);
+
+				if (endNodeRecord.costSoFar <= endNodeCost)
+				{
+					continue;
+				}
+
+				closedList -= endNodeRecord;
+
+				endNodeHeuristic = endNodeRecord.estimatedTotalCost - endNodeRecord.costSoFar;
 			}
 			else if (openList.contains(endNode))
 			{
@@ -85,15 +97,20 @@ Path* DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 				{
 					continue;
 				}
+
+				endNodeHeuristic = endNodeRecord.connection->getCost() - endNodeRecord.costSoFar;
 			}
 			else
 			{
 				endNodeRecord = NodeRecord();
 				endNodeRecord.node = endNode;
+
+				endNodeHeuristic = heuristic.estimateCost(endNode);
 			}
 
-			endNodeRecord.connection = currentConnection;
 			endNodeRecord.costSoFar = endNodeCost;
+			endNodeRecord.connection = currentConnection;
+			endNodeRecord.estimatedTotalCost = endNodeCost + endNodeHeuristic;
 
 			if (!openList.contains(endNode))
 			{
@@ -112,13 +129,18 @@ Path* DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 	if (current.node == pTo)
 	{
 		NodeRecord temp = current;
-		
+
 		while (temp.node != pFrom)
 		{
 			pPath->addNode(temp.node);
 			closedList.find(temp.connection->getFromNode(), temp);
 		}
 
+		pPath->addNode(pFrom);
+	}
+
+	if (pPath->getNumNodes() == 0)
+	{
 		pPath->addNode(pFrom);
 	}
 

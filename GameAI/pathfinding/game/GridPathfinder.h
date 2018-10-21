@@ -1,6 +1,8 @@
-#pragma once
+#ifndef GRID_PATHFINDER_H_
+#define GRID_PATHFINDER_H_
 
 #include "Pathfinder.h"
+
 class GridGraph;
 class GridVisualizer;
 class GraphicsBuffer;
@@ -11,20 +13,35 @@ class GridPathfinder : public Pathfinder
 public:
 	friend class PathfindingDebugContent;
 
-	GridPathfinder( GridGraph* pGraph );
+	GridPathfinder(GridGraph* pGraph, Node* pFrom, Node* pTo);
 	virtual ~GridPathfinder();
 
-	virtual Path* findPath( Node* pFrom, Node* pTo ) = 0;
-	
+	inline virtual Path* findPath(Node* pFrom, Node* pTo) = 0;
+	inline void setNodes(Node* pFrom, Node* pTo)
+	{
+		mpFrom = pFrom;
+		mpTo = pTo;
+	};
+
+	inline Node* getFromNode() const { return mpFrom; }
+	inline Node* getToNode() const { return mpTo; }
+
+//just for visualization
 #ifdef VISUALIZE_PATH
-	//just for visualization
 public:
-	void drawVisualization( Grid* pGrid, GraphicsBuffer* pDest );
+	void drawVisualization(Grid* pGrid, GraphicsBuffer* pDest);
+
 protected:
 	std::vector<Node*> mVisitedNodes;
 	Path* mpPath;
 	GridVisualizer* mpVisualizer;
+
+	Node* mpFrom;
+	Node* mpTo;
+
 #endif
 
 	double mTimeElapsed;
 };
+
+#endif
