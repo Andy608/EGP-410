@@ -17,7 +17,6 @@ public:
 	Node* getAndRemoveNextNode();
 	bool containsNode(Node* pNode);
 	int getNumNodes() const { return mNodes.size(); };
-
 	void addNode(Node* pNode);
 
 private:

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAME_APP_H_
+#define GAME_APP_H_
 
 /*Game - class to hold all game related info.
 
@@ -65,7 +66,8 @@ private:
 	GridVisualizer* mpGridVisualizer;
 	GridGraph* mpGridGraph;
 	DebugDisplay* mpDebugDisplay;
-
 	GridPathfinder* mpPathfinder;
 };
+
+#endif
 

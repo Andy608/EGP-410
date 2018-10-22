@@ -6,7 +6,7 @@
 class AStarPathfinder : public GridPathfinder
 {
 public:
-	AStarPathfinder(Graph* pGraph, Node* pFrom = NULL, Node* pTo = NULL);
+	AStarPathfinder(Graph* pGraph, Node* pFrom = nullptr, Node* pTo = nullptr);
 	virtual ~AStarPathfinder();
 
 	Path* findPath(Node* pFrom, Node* pTo);

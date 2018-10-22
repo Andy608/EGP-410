@@ -57,8 +57,6 @@ Path* AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 
 	while (openList.size() > 0)
 	{
-		//std::cout << "OPENLIST SIZE: " << std::to_string(openList.size()) << std::endl;
-
 		openList.getSmallestElement(current);
 
 		if (current.node == pTo)
@@ -92,13 +90,12 @@ Path* AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 			{
 				openList.find(endNode, endNodeRecord);
 
-				//the book says endNodeRecord->cost. not costSoFar :/
 				if (endNodeRecord.costSoFar <= endNodeCost)
 				{
 					continue;
 				}
 
-				endNodeHeuristic = endNodeRecord.connection->getCost() - endNodeRecord.costSoFar;
+				endNodeHeuristic = heuristic.estimateCost(endNode);
 			}
 			else
 			{

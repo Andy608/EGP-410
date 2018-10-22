@@ -6,7 +6,7 @@
 class DijkstraPathfinder : public GridPathfinder
 {
 public:
-	DijkstraPathfinder(Graph* pGraph, Node* pFrom = NULL, Node* pTo = NULL);
+	DijkstraPathfinder(Graph* pGraph, Node* pFrom = nullptr, Node* pTo = nullptr);
 	virtual ~DijkstraPathfinder();
 
 	Path* findPath(Node* pFrom, Node* pTo);

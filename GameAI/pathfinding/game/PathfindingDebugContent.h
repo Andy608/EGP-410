@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PATHFINDING_DEBUG_CONTENT_H_
+#define PATHFINDING_DEBUG_CONTENT_H_
 
 #include "DebugContent.h"
 
@@ -15,3 +16,5 @@ public:
 private:
 	GridPathfinder* mpPathfinder;
 };
+
+#endif

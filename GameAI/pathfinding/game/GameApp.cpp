@@ -30,12 +30,15 @@ const int GRID_SQUARE_SIZE = 32;
 const std::string gFileName = "pathgrid.txt";
 
 GameApp::GameApp() : 
-	mpInputSystem(NULL),
-	mpMessageManager(NULL),
-	mpGrid(NULL),
-	mpGridGraph(NULL),
-	mpPathfinder(NULL),
-	mpDebugDisplay(NULL) {}
+	mpInputSystem(nullptr),
+	mpMessageManager(nullptr),
+	mpGrid(nullptr),
+	mpGridGraph(nullptr),
+	mpPathfinder(nullptr),
+	mpDebugDisplay(nullptr)
+{
+
+}
 
 GameApp::~GameApp()
 {
@@ -45,7 +48,7 @@ GameApp::~GameApp()
 bool GameApp::init()
 {
 	bool retVal = Game::init();
-	if( retVal == false )
+	if (retVal == false)
 	{
 		return false;
 	}
@@ -55,9 +58,10 @@ bool GameApp::init()
 
 	//create and load the Grid, GridBuffer, and GridRenderer
 	mpGrid = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
-	mpGridVisualizer = new GridVisualizer( mpGrid );
-	std::ifstream theStream( gFileName );
-	mpGrid->load( theStream );
+	mpGridVisualizer = new GridVisualizer(mpGrid);
+
+	std::ifstream theStream(gFileName);
+	mpGrid->load(theStream);
 
 	//create the GridGraph for pathfinding
 	mpGridGraph = new GridGraph(mpGrid);
@@ -71,10 +75,10 @@ bool GameApp::init()
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID, "wallpaper.bmp");
 
 	//setup sprites
-	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( mBackgroundBufferID );
-	if( pBackGroundBuffer != NULL )
+	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(mBackgroundBufferID);
+	if(pBackGroundBuffer != nullptr)
 	{
-		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight() );
+		mpSpriteManager->createAndManageSprite(BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight());
 	}
 
 	mpMasterTimer->start();
@@ -84,25 +88,25 @@ bool GameApp::init()
 void GameApp::cleanup()
 {
 	delete mpInputSystem;
-	mpInputSystem = NULL;
+	mpInputSystem = nullptr;
 
 	delete mpMessageManager;
-	mpMessageManager = NULL;
+	mpMessageManager = nullptr;
 
 	delete mpGrid;
-	mpGrid = NULL;
+	mpGrid = nullptr;
 
 	delete mpGridVisualizer;
-	mpGridVisualizer = NULL;
+	mpGridVisualizer = nullptr;
 
 	delete mpGridGraph;
-	mpGridGraph = NULL;
+	mpGridGraph = nullptr;
 
 	delete mpDebugDisplay;
-	mpDebugDisplay = NULL;
+	mpDebugDisplay = nullptr;
 
 	delete mpPathfinder;
-	mpPathfinder = NULL;
+	mpPathfinder = nullptr;
 }
 
 void GameApp::beginLoop()
@@ -116,13 +120,13 @@ void GameApp::processLoop()
 	//get back buffer
 	GraphicsBuffer* pBackBuffer = mpGraphicsSystem->getBackBuffer();
 	//copy to back buffer
-	mpGridVisualizer->draw( *pBackBuffer );
+	mpGridVisualizer->draw(*pBackBuffer);
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
 	mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
 #endif
 
-	mpDebugDisplay->draw( pBackBuffer );
+	mpDebugDisplay->draw(pBackBuffer);
 
 	mpInputSystem->update();
 	mpMessageManager->processMessagesForThisframe();
@@ -138,8 +142,8 @@ bool GameApp::endLoop()
 
 void GameApp::setPathfinder(EnumPathfinderType type)
 {
-	Node* pFrom = NULL;
-	Node* pTo = NULL;
+	Node* pFrom = nullptr;
+	Node* pTo = nullptr;
 
 	if (mpPathfinder)
 	{

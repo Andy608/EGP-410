@@ -17,16 +17,11 @@ public:
 	virtual ~GridPathfinder();
 
 	inline virtual Path* findPath(Node* pFrom, Node* pTo) = 0;
-	inline void setNodes(Node* pFrom, Node* pTo)
-	{
-		mpFrom = pFrom;
-		mpTo = pTo;
-	};
+	inline void setNodes(Node* pFrom, Node* pTo) { mpFrom = pFrom; mpTo = pTo; };
 
 	inline Node* getFromNode() const { return mpFrom; }
 	inline Node* getToNode() const { return mpTo; }
 
-//just for visualization
 #ifdef VISUALIZE_PATH
 public:
 	void drawVisualization(Grid* pGrid, GraphicsBuffer* pDest);
@@ -38,7 +33,6 @@ protected:
 
 	Node* mpFrom;
 	Node* mpTo;
-
 #endif
 
 	double mTimeElapsed;

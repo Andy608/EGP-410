@@ -22,13 +22,8 @@ public:
 	Node* getNode(int index);
 
 protected:
-	//a vector of Node pointers
 	std::vector<Node*> mNodes;
-
-	//a vector of Connection pointers
 	std::vector<Connection*> mConnections;
-	
-	//a map of Connection&'s vectors indexed on Node id
 	std::map<NODE_ID, std::vector<Connection*>> mConnectionMap;
 };
 

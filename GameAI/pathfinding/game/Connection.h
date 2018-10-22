@@ -2,6 +2,7 @@
 #define CONNECTION_H_
 
 #include <Trackable.h>
+
 class Node;
 
 class Connection : public Trackable

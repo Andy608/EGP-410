@@ -1,5 +1,4 @@
 #include <cassert>
-
 #include "Game.h"
 #include "GameMessageManager.h"
 #include "GameMessage.h"

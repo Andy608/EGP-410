@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DEBUG_DISPLAY_H_
+#define DEBUG_DISPLAY_H_
 
 #include <Trackable.h>
 #include <Vector2D.h>
@@ -17,5 +18,6 @@ public:
 private:
 	DebugContent* mpContent;
 	Vector2D mPos;
-
 };
+
+#endif

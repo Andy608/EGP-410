@@ -5,9 +5,10 @@
 
 using namespace std;
 
-PathfindingDebugContent::PathfindingDebugContent( GridPathfinder* pPathfinder )
-	:mpPathfinder(pPathfinder)
+PathfindingDebugContent::PathfindingDebugContent(GridPathfinder* pPathfinder) :
+	mpPathfinder(pPathfinder)
 {
+
 }
 
 string PathfindingDebugContent::getDebugString()
@@ -15,7 +16,7 @@ string PathfindingDebugContent::getDebugString()
 	stringstream theStream;
 
 #ifdef VISUALIZE_PATH
-	if( mpPathfinder->mpPath != NULL )
+	if(mpPathfinder->mpPath != nullptr)
 	{
 		theStream << "Pathlength:"<< mpPathfinder->mpPath->getNumNodes();
 	}
@@ -25,4 +26,3 @@ string PathfindingDebugContent::getDebugString()
 	theStream << "  Elapsed Time:" << mpPathfinder->mTimeElapsed;
 	return theStream.str();
 }
-
