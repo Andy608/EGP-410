@@ -119,6 +119,11 @@ Path* DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 		pPath->addNode(pFrom);
 	}
 
+	if (pPath->getNumNodes() == 0)
+	{
+		pPath->addNode(pFrom);
+	}
+
 	gpPerformanceTracker->stopTracking("path");
 	mTimeElapsed = gpPerformanceTracker->getElapsedTime("path");
 
