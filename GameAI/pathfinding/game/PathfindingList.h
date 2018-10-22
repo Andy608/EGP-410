@@ -1,14 +1,14 @@
 #ifndef PATHFINDING_LIST_H_
 #define PATHFINDING_LIST_H_
 
-#include <vector>
+#include <list>
 #include <Trackable.h>
 #include "Node.h"
 #include "Connection.h"
 
 struct NodeRecord : public Trackable
 {
-	inline NodeRecord(Node* n = NULL, Connection* c = NULL, float cost = 0.0f, float estimate = 0.0f) :
+	inline NodeRecord(Node* n = nullptr, Connection* c = nullptr, float cost = 0.0f, float estimate = 0.0f) :
 		node(n), connection(c), costSoFar(cost), estimatedTotalCost(estimate) {};
 
 	Node* node;
@@ -46,8 +46,8 @@ public:
 	inline const int size() { return mNodeRecords.size(); };
 
 private:
-	void print(std::vector<NodeRecord> records);
-	std::vector<NodeRecord> mNodeRecords;
+	void print(std::list<NodeRecord> records);
+	std::list<NodeRecord> mNodeRecords;
 };
 
 #endif

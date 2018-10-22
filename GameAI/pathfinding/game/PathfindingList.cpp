@@ -8,10 +8,10 @@ PathfindingList::~PathfindingList()
 
 bool PathfindingList::contains(Node* node)
 {
-	unsigned int i = 0;
-	for (; i < mNodeRecords.size(); ++i)
+	auto iter = mNodeRecords.begin();
+	for (; iter != mNodeRecords.end(); ++iter)
 	{
-		if (mNodeRecords.at(i).node == node)
+		if ((*iter).node == node)
 		{
 			return true;
 		}
@@ -22,12 +22,13 @@ bool PathfindingList::contains(Node* node)
 
 bool PathfindingList::find(Node* node, NodeRecord& nodeRecord)
 {
-	unsigned int i = 0;
-	for (; i < mNodeRecords.size(); ++i)
+	auto iter = mNodeRecords.begin();
+	for (; iter != mNodeRecords.end(); ++iter)
 	{
-		if (mNodeRecords.at(i).node == node)
+		NodeRecord& currentRecord = (*iter);
+		if (currentRecord.node == node)
 		{
-			nodeRecord = mNodeRecords.at(i);
+			nodeRecord = currentRecord;
 			return true;
 		}
 	}
@@ -52,15 +53,15 @@ bool PathfindingList::getSmallestElement(NodeRecord& nodeRecord)
 
 void PathfindingList::operator+=(NodeRecord& recordToAdd)
 {
-	unsigned int i = 0;
-	for (; i < mNodeRecords.size(); ++i)
+	auto iter = mNodeRecords.begin();
+	for (; iter != mNodeRecords.end(); ++iter)
 	{
-		NodeRecord& currentRecord = mNodeRecords.at(i);
+		NodeRecord& currentRecord = *iter;
 
 		if (recordToAdd <= currentRecord)
 		{
 			//std::cout << "ADDING: " << recordToAdd.costSoFar << " AT INDEX: " << std::to_string(i) << std::endl;
-			mNodeRecords.insert(mNodeRecords.begin() + i, recordToAdd);
+			mNodeRecords.insert(iter, recordToAdd);
 			return;
 		}
 	}
@@ -71,13 +72,15 @@ void PathfindingList::operator+=(NodeRecord& recordToAdd)
 
 void PathfindingList::operator-=(NodeRecord& recordToRemove)
 {
-	unsigned int i = 0;
-	for (; i < mNodeRecords.size(); ++i)
+	auto iter = mNodeRecords.begin();
+	for (; iter != mNodeRecords.end(); ++iter)
 	{
-		if (mNodeRecords.at(i) == recordToRemove)
+		NodeRecord& currentRecord = *iter;
+
+		if (currentRecord == recordToRemove)
 		{
 			//std::cout << "REMOVING: " << std::to_string(recordToRemove.costSoFar) << std::endl;
-			mNodeRecords.erase(mNodeRecords.begin() + i);
+			mNodeRecords.erase(iter);
 			break;
 		}
 	}
@@ -88,7 +91,7 @@ void PathfindingList::print()
 	print(mNodeRecords);
 }
 
-void PathfindingList::print(std::vector<NodeRecord> records)
+void PathfindingList::print(std::list<NodeRecord> records)
 {
 	auto iter = records.begin();
 
