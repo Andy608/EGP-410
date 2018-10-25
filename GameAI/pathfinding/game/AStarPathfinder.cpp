@@ -42,7 +42,7 @@ Path* AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 	NodeRecord startRecord = NodeRecord(pFrom, nullptr, 0.0f, heuristic.estimateCost(pFrom));
 
 	PathfindingList openList;
-	openList += startRecord;
+	openList.addBasedOnEstimate(startRecord);
 
 	PathfindingList closedList;
 
@@ -84,7 +84,7 @@ Path* AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 
 				closedList -= endNodeRecord;
 
-				endNodeHeuristic = endNodeRecord.estimatedTotalCost - endNodeRecord.costSoFar;
+				endNodeHeuristic = heuristic.estimateCost(endNode);
 			}
 			else if (openList.contains(endNode))
 			{
@@ -111,7 +111,7 @@ Path* AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 
 			if (!openList.contains(endNode))
 			{
-				openList += endNodeRecord;
+				openList.addBasedOnEstimate(endNodeRecord);
 			}
 
 #ifdef VISUALIZE_PATH
@@ -120,7 +120,7 @@ Path* AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 		}
 
 		openList -= current;
-		closedList += current;
+		closedList.addBasedOnEstimate(current);
 	}
 
 	if (current.node == pTo)
@@ -138,7 +138,8 @@ Path* AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 
 	if (pPath->getNumNodes() == 0)
 	{
-		pPath->addNode(pFrom);
+		delete pPath;
+		pPath = nullptr;
 	}
 
 	gpPerformanceTracker->stopTracking("path");

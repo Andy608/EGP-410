@@ -40,7 +40,7 @@ Path* DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 	NodeRecord startRecord = NodeRecord(pFrom, nullptr, 0.0f);
 
 	PathfindingList openList;
-	openList += startRecord;
+	openList.addBasedOnCost(startRecord);
 
 	PathfindingList closedList;
 
@@ -94,7 +94,7 @@ Path* DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 
 			if (!openList.contains(endNode))
 			{
-				openList += endNodeRecord;
+				openList.addBasedOnCost(endNodeRecord);
 			}
 
 #ifdef VISUALIZE_PATH
@@ -103,7 +103,7 @@ Path* DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 		}
 
 		openList -= current;
-		closedList += current;
+		closedList.addBasedOnCost(current);
 	}
 
 	if (current.node == pTo)
@@ -121,7 +121,8 @@ Path* DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 
 	if (pPath->getNumNodes() == 0)
 	{
-		pPath->addNode(pFrom);
+		delete pPath;
+		pPath = nullptr;
 	}
 
 	gpPerformanceTracker->stopTracking("path");

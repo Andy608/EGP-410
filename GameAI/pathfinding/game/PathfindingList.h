@@ -21,11 +21,6 @@ struct NodeRecord : public Trackable
 		return (node == another.node && connection == another.connection 
 			&& costSoFar == another.costSoFar && estimatedTotalCost == another.estimatedTotalCost);
 	}
-
-	bool operator<=(const NodeRecord& another)
-	{
-		return (costSoFar <= another.costSoFar);
-	}
 };
 
 class PathfindingList : public Trackable
@@ -38,7 +33,8 @@ public:
 	bool PathfindingList::find(Node* node, NodeRecord& nodeRecord);
 	bool PathfindingList::getSmallestElement(NodeRecord& nodeRecord);
 
-	void operator+=(NodeRecord& recordToAdd);
+	void addBasedOnCost(NodeRecord& recordToAdd);
+	void addBasedOnEstimate(NodeRecord& recordToAdd);
 	void operator-=(NodeRecord& recordToRemove);
 
 	void print();

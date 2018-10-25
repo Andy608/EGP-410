@@ -51,22 +51,37 @@ bool PathfindingList::getSmallestElement(NodeRecord& nodeRecord)
 	}
 }
 
-void PathfindingList::operator+=(NodeRecord& recordToAdd)
+void PathfindingList::addBasedOnCost(NodeRecord& recordToAdd)
 {
 	auto iter = mNodeRecords.begin();
 	for (; iter != mNodeRecords.end(); ++iter)
 	{
 		NodeRecord& currentRecord = *iter;
 
-		if (recordToAdd <= currentRecord)
+		if (recordToAdd.costSoFar <= currentRecord.costSoFar)
 		{
-			//std::cout << "ADDING: " << recordToAdd.costSoFar << " AT INDEX: " << std::to_string(i) << std::endl;
 			mNodeRecords.insert(iter, recordToAdd);
 			return;
 		}
 	}
 
-	//std::cout << "ADDING: " << recordToAdd.costSoFar << " AT END OF LIST." << std::endl;
+	mNodeRecords.push_back(recordToAdd);
+}
+
+void PathfindingList::addBasedOnEstimate(NodeRecord& recordToAdd)
+{
+	auto iter = mNodeRecords.begin();
+	for (; iter != mNodeRecords.end(); ++iter)
+	{
+		NodeRecord& currentRecord = *iter;
+
+		if (recordToAdd.estimatedTotalCost <= currentRecord.estimatedTotalCost)
+		{
+			mNodeRecords.insert(iter, recordToAdd);
+			return;
+		}
+	}
+
 	mNodeRecords.push_back(recordToAdd);
 }
 

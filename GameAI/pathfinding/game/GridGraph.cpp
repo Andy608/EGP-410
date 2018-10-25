@@ -59,8 +59,8 @@ void GridGraph::init()
 					//EXTRA CREDIT START
 
 					//Calculate the distance/weight between the grid pixels :)
-					Vector2D fromGridPos = mpGrid->getULCornerOfSquare(i);
-					Vector2D toGridPos = mpGrid->getULCornerOfSquare(adjacencies[adjIndex]);
+					Vector2D fromGridPos = mpGrid->getULCornerOfSquare(pFromNode->getId());
+					Vector2D toGridPos = mpGrid->getULCornerOfSquare(pToNode->getId());
 					Vector2D dist = toGridPos - fromGridPos;
 
 					Connection* pConnection = new Connection(pFromNode, pToNode, dist.getLengthSquared());//create a connection
